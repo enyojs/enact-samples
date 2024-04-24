@@ -20,6 +20,6 @@
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "eslint-config-enact-proxy": "^1.0.6"
+    "eslint-config-enact-proxy": "^1.0.7"
   }
 }
