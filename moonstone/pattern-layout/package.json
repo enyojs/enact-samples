@@ -15,6 +15,9 @@
     "test-watch": "enact test --watch"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "private": true,
   "repository": "https://github.com/enyojs/enact-samples",
   "enact": {
@@ -35,7 +38,7 @@
     "@enact/webos": "^4.8.0",
     "ilib": "^14.20.0",
     "prop-types": "^15.8.1",
-    "query-string": "^8.2.0",
+    "query-string": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
