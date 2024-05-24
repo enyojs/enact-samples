@@ -18,7 +18,7 @@ script:
     - echo -e "\x1b\x5b35;1m*** eslint complete\x1b\x5b0m"
     - echo -e "\x1b\x5b35;1m*** Starting agate/all-samples build...\x1b\x5b0m"
     - cd agate/all-samples
-    - npm install
+    - npm install --force
     - npm run pack
     - cd ../../
     - echo -e "\x1b\x5b35;1m*** agate/all-samples build complete\x1b\x5b0m"
