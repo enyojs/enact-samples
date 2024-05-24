@@ -5,7 +5,7 @@ import NavContainer from '../containers/NavContainer';
 
 import Body from './Body';
 
-import css from './MainView.module.less';
+import * as css from './MainView.module.less';
 
 const MainView = kind({
 	name: 'MainView',

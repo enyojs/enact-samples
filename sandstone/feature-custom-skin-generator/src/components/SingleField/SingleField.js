@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 
 import ColorPicker from '../ColorPicker/ColorPicker';
 
-import commonCss from '../../common/styles.module.less';
-import componentCss from './SingleField.module.less';
+import * as commonCss from '../../common/styles.module.less';
+import * as componentCss from './SingleField.module.less';
 
 /**
  * A component that contains a label and an input field, used to change the value of a css attribute

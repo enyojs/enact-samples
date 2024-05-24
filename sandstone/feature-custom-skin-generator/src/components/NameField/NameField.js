@@ -5,8 +5,8 @@ import {Cell, Layout} from '@enact/ui/Layout';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import commonCss from '../../common/styles.module.less';
-import componentCss from './NameField.module.less';
+import * as commonCss from '../../common/styles.module.less';
+import * as componentCss from './NameField.module.less';
 
 /**
  * A component that contains a label and an input field, used to denote the name of the skin

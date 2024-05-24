@@ -34,7 +34,7 @@ import {
 } from '../utils';
 
 import styles from '../common/styles.module.less';
-import css from './MainPanel.module.less';
+import * as css from './MainPanel.module.less';
 
 const TooltipButton = TooltipDecorator({tooltipDestinationProp: 'decoration'}, Button);
 

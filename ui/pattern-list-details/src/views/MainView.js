@@ -5,7 +5,7 @@ import Nav from '../components/Nav';
 
 import Body from './Body';
 
-import css from './MainView.module.less';
+import * as css from './MainView.module.less';
 
 const cities = {
 	usa: ['San Francisco', 'Los Angeles', 'New York City'],

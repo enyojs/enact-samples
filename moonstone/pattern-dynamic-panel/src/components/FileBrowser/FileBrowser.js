@@ -15,7 +15,7 @@ import rainbow from '/assets/images/rainbow.jpg';
 
 import DynamicPanel from '../DynamicPanel';
 
-import css from './FileBrowser.module.less';
+import * as css from './FileBrowser.module.less';
 
 const a = {
 	files: [

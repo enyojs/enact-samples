@@ -12,7 +12,7 @@ import TooltipDecorator from '@enact/sandstone/TooltipDecorator';
 import {Cell, Column, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 
-import css from './OutputField.module.less';
+import * as css from './OutputField.module.less';
 
 import {generateCSS, generateCSSFile, getPresetDifferences} from '../../utils';
 

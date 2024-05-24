@@ -4,7 +4,7 @@ import {Cell, Row} from '@enact/ui/Layout';
 import ContentContainer from '../containers/ContentContainer';
 import SideBarContainer from '../containers/SideBarContainer';
 
-import css from './Body.module.less';
+import * as css from './Body.module.less';
 
 const Body = kind({
 	name: 'Body',

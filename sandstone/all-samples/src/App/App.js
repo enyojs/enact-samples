@@ -22,7 +22,7 @@ import {appElementBase as PatternVirtuallistPreservingFocus} from '../../../patt
 import {AppBase as TutorialHelloEnact} from '../../../tutorial-hello-enact/src/App/App';
 import {AppBase as TutorialKittenBrowser} from '../../../tutorial-kitten-browser/src/App/App';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const NavigationMenu = kind({
 	name: 'NavigationMenu',

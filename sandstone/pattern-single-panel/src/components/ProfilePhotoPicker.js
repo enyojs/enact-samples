@@ -11,7 +11,7 @@ import mural from '../../assets/images/mural.jpeg';
 import spaceShuttle from '../../assets/images/space-shuttle.jpg';
 import violin from '../../assets/images/violin.jpeg';
 
-import css from './ProfilePhotoPicker.module.less';
+import * as css from './ProfilePhotoPicker.module.less';
 
 const imageURLs = [
 	car,

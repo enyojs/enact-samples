@@ -4,7 +4,7 @@ import Heading from '@enact/my-theme/Heading';
 import {Row, Cell} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 
-import css from './PanelHeader.module.less';
+import * as css from './PanelHeader.module.less';
 
 const PanelHeader = kind({
 	name: 'PanelHeader',

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import MainPanel from '../views/MainPanel';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const Sample = kind({
 	name: 'App',

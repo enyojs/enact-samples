@@ -4,7 +4,7 @@ import Item from '@enact/ui/Item';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import css from './CityItem.module.less';
+import * as css from './CityItem.module.less';
 
 const CityItem = kind({
 	name: 'CityItem',

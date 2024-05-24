@@ -4,7 +4,7 @@ import Button from '@enact/sandstone/Button';
 import Popup from '@enact/sandstone/Popup';
 import PropTypes from 'prop-types';
 
-import commonCss from '../../common/styles.module.less';
+import * as commonCss from '../../common/styles.module.less';
 
 /**
  * A popup component containing the alert for `switch to auto` warning

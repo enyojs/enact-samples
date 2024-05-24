@@ -8,8 +8,8 @@ import {useState} from 'react';
 
 import {convertHexToRGB, convertRGBToHex, hexColors} from '../../utils';
 
-import commonCss from '../../common/styles.module.less';
-import componentCss from './ColorPicker.module.less';
+import * as commonCss from '../../common/styles.module.less';
+import * as componentCss from './ColorPicker.module.less';
 
 /**
  * A component that replaces the html color picker

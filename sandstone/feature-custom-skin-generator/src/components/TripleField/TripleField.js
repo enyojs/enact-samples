@@ -9,8 +9,8 @@ import ColorPicker from '../ColorPicker/ColorPicker';
 
 import {convertHexToRGB, convertRGBToHex} from '../../utils';
 
-import commonCss from '../../common/styles.module.less';
-import componentCss from './TripleField.module.less';
+import * as commonCss from '../../common/styles.module.less';
+import * as componentCss from './TripleField.module.less';
 
 /**
  * A component that contains a label and three input fields, used to change the value of a css attribute

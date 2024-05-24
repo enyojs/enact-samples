@@ -3,7 +3,7 @@ import kind from '@enact/core/kind';
 
 import MainView from '../views/MainView';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const AppBase = kind({
 	name: 'App',

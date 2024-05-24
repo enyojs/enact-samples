@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import PanelHeader from '../components/PanelHeader';
 
-import commonCss from './common.module.less';
+import * as commonCss from './common.module.less';
 
 const ButtonsIconsPanel = kind({
 	name: 'ButtonsIconsPanel',

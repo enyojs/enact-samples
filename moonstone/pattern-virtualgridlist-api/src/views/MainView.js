@@ -7,7 +7,7 @@ import SideBar from '../components/SideBar';
 
 import AppStateDecorator from './AppStateDecorator';
 
-import css from './MainView.module.less';
+import * as css from './MainView.module.less';
 
 const albums = ['Family', 'Car', 'Travel'];
 

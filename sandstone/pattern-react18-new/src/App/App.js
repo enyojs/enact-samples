@@ -7,7 +7,7 @@ import Batching from '../views/Batching/Batching';
 import Suspense from '../views/Suspense/Suspense';
 import UseTransition from '../views/UseTransition/UseTransition';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const App = (props) => {
 	return (

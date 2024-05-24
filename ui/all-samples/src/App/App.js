@@ -5,7 +5,7 @@ import SampleItem from '../components/SampleItem';
 import Scroller from '@enact/ui/Scroller';
 import {useNavigate} from 'react-router-dom';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const App = kind({
 	name: 'App',

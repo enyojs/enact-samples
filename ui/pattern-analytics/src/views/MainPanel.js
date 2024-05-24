@@ -3,7 +3,7 @@ import Button from '@enact/ui/Button';
 import BodyText from '@enact/ui/BodyText';
 import Heading from '@enact/ui/Heading';
 
-import css from './MainPanel.module.less';
+import * as css from './MainPanel.module.less';
 
 const MainPanel = kind({
 	name: 'MainPanel',

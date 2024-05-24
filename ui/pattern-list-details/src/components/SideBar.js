@@ -3,7 +3,7 @@ import Group from '@enact/ui/Group';
 import Item from '@enact/ui/Item';
 import PropTypes from 'prop-types';
 
-import css from './SideBar.module.less';
+import * as css from './SideBar.module.less';
 
 const SideBar = kind({
 	name: 'SideBar',

@@ -22,7 +22,7 @@ import {appElementBase as PatternVirtualgridlistApi} from '../../../pattern-virt
 import {appElementBase as PatternVirtuallistPreservingFocus} from '../../../pattern-virtuallist-preserving-focus/src/main';
 
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const NavigationMenu = kind({
 	name: 'NavigationMenu',
