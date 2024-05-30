@@ -1,0 +1,146 @@
+.animations {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.animations > div {
+	display: flex;
+	justify-content: center;
+}
+
+.animationPicker {
+	align-items: center;
+	display: flex;
+}
+
+.icon {
+	cursor: pointer;
+}
+
+.scroller {
+	text-align: center;
+}
+
+// Image animations
+.revealImage {
+	animation: reveal linear;
+	animation-timeline: view();
+}
+
+.zoomImage {
+	animation: zoom linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.zoomInOutImage {
+	animation: zoom-in-out linear;
+	animation-timeline: view();
+}
+
+@keyframes reveal {
+	0% { opacity: 0 }
+	50%  { opacity: 1 }
+	100% {opacity: 0 }
+}
+
+@keyframes zoom {
+	from {
+		opacity: 0;
+		transform: scale3d(0.3, 0.3, 0.3);
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes zoom-in-out {
+	from {
+		opacity: 0;
+		transform: scale3d(0.3, 0.3, 0.3);
+	}
+	50% {
+		opacity: 1;
+		transform: scale3d(1, 1, 1);
+	}
+	to {
+		opacity: 0;
+		transform: scale3d(0.3, 0.3, 0.3);
+	}
+}
+
+// Text animations
+.crossSwipeText:nth-of-type(even) {
+	animation: cross-swipe-even linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.crossSwipeText:nth-of-type(odd) {
+	animation: cross-swipe-odd linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.fadeText {
+	animation: fade linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.swipeLeftText {
+	animation: swipe-left linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.swipeRightText {
+	animation: swipe-right linear;
+	animation-timeline: view();
+	animation-range-end: 60%;
+}
+
+.virtualListAnimation {
+	animation: swipe-right linear;
+	animation-timeline: view();
+}
+
+@keyframes cross-swipe-even {
+	from { transform: translate3d(100%, 0, 0) }
+	to { transform: translate3d(0, 0, 0) }
+}
+
+@keyframes cross-swipe-odd {
+	from { transform: translate3d(-100%, 0, 0) }
+	to { transform: translate3d(0, 0, 0) }
+}
+
+@keyframes fade {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+
+@keyframes swipe-left {
+	from { transform: translate3d(-100%, 0, 0) }
+	to { transform: translate3d(0, 0, 0) }
+}
+
+@keyframes swipe-right {
+	from { transform: translate3d(100%, 0, 0) }
+	to { transform: translate3d(0, 0, 0) }
+}
+
+// VirtualList
+.scrollAnimation {
+	animation: animate-in-and-out linear both;
+	animation-timeline: scroll();
+
+	padding-left: 2%;
+}
+
+@keyframes animate-in-and-out {
+	0%  { transform: translate3d(100%, 0, 0) }
+	100% { transform: translate3d(0, 0, 0)  }
+}
