@@ -38,8 +38,8 @@
 		"classnames": "^2.5.1",
 		"ilib": "^14.20.0",
 		"prop-types": "^15.8.1",
-		"react": "^19.0.0-rc-935180c7e0-20240524",
-		"react-dom": "^19.0.0-rc-935180c7e0-20240524"
+		"react": "^19.0.0-rc-38e3b23483-20240529",
+		"react-dom": "^19.0.0-rc-38e3b23483-20240529"
 	},
 	"devDependencies": {
 		"eslint-config-enact-proxy": "^1.0.7"
