@@ -35,7 +35,7 @@
   "dependencies": {
     "@enact/core": "^4.8.0",
     "@enact/i18n": "^4.8.0",
-    "@enact/my-theme": "enactjs/my-theme#feature/WRQ-21652",
+    "@enact/my-theme": "enactjs/my-theme#feature/react19",
     "@enact/spotlight": "^4.8.0",
     "@enact/ui": "^4.8.0",
     "ilib": "^14.20.0",
