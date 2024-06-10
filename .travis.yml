@@ -18,7 +18,7 @@ script:
     - echo -e "\x1b\x5b35;1m*** eslint complete\x1b\x5b0m"
     - echo -e "\x1b\x5b35;1m*** Starting agate/all-samples build...\x1b\x5b0m"
     - cd agate/all-samples
-    - npm install
+    - npm install --force
     - npm run pack
     - cd ../../
     - echo -e "\x1b\x5b35;1m*** agate/all-samples build complete\x1b\x5b0m"
@@ -30,13 +30,13 @@ script:
     - echo -e "\x1b\x5b35;1m*** moonstone/all-samples build complete\x1b\x5b0m"
     - echo -e "\x1b\x5b35;1m*** Starting sandstone/all-samples build...\x1b\x5b0m"
     - cd sandstone/all-samples
-    - npm install
+    - npm install --force
     - npm run pack
     - cd ../../
     - echo -e "\x1b\x5b35;1m*** sandstone/all-samples build complete\x1b\x5b0m"
     - echo -e "\x1b\x5b35;1m*** Starting ui/all-samples build...\x1b\x5b0m"
     - cd ui/all-samples
-    - npm install
+    - npm install --force
     - npm run pack
     - cd ../../
     - echo -e "\x1b\x5b35;1m*** ui/all-samples build complete\x1b\x5b0m"
