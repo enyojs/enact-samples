@@ -124,7 +124,9 @@ const AppBase = ({className, subtitleId, videoId, ...rest}) => {
 
 	if (subtitlePanelsVisible) {
 		content = (
-			<Panels>
+			<Panels
+				onClose={handleHideSubtitlePanelsClick}
+			>
 				<SubtitleSelectionPanel
 					onHidePanels={handleHideSubtitlePanelsClick}
 					onSubtitleIndexChange={handleSubtitleIndexChange}
@@ -136,7 +138,9 @@ const AppBase = ({className, subtitleId, videoId, ...rest}) => {
 		);
 	} else if (videoPanelsVisible) {
 		content = (
-			<Panels>
+			<Panels
+				onClose={handleHideVideoPanelsClick}
+			>
 				<VideoSelectionPanel
 					onHidePanels={handleHideVideoPanelsClick}
 					onVideoIndexChange={handleVideoIndexChange}
@@ -147,7 +151,9 @@ const AppBase = ({className, subtitleId, videoId, ...rest}) => {
 		);
 	} else if (resolutionDropdownVisible) {
 		content = (
-			<Panels>
+			<Panels
+				onClose={handleHideResolution}
+			>
 				<Panel>
 					<Header title="Select Video Resolution">
 						<Button

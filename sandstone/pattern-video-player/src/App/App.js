@@ -59,6 +59,7 @@ const AppBase = ({className, panelId, videoId, ...rest}) => {
 				<Panels
 					index={panelIndex}
 					onBack={handleBack}
+					onClose={handleHidePanelsClick}
 				>
 					<MainPanel
 						onHidePanels={handleHidePanelsClick}
