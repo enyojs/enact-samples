@@ -3,7 +3,7 @@ import Button from '@enact/ui/Button';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import css from './CountryButton.module.less';
+import * as css from './CountryButton.module.less';
 
 const CountryButton = kind({
 	name: 'CountryButton',

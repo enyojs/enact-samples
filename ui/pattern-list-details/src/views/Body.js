@@ -5,7 +5,7 @@ import {useCallback, useEffect, useState} from 'react';
 import Content from '../components/Content';
 import SideBar from '../components/SideBar';
 
-import css from './Body.module.less';
+import * as css from './Body.module.less';
 
 const Body = ({cities, selectedCountry, ...rest}) => {
 	const [city, setCity] = useState(cities['usa'][0]);

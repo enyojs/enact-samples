@@ -4,7 +4,7 @@ import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import {useCallback} from 'react';
 
-import css from './PatternList.module.less';
+import * as css from './PatternList.module.less';
 
 const items = Array.from(new Array(1000)).map((n, i) => `Item  ${('00' + i).slice(-3)}`);
 

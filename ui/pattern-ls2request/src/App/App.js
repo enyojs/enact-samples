@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {getSystemSettings, setSystemSettings, setSystemSettingsSubscribed} from '../store';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const App = () => {
 	const {brightness, eyeComfortMode} = useSelector(state => state);

@@ -4,7 +4,7 @@ import Changeable from '@enact/ui/Changeable';
 
 import FileBrowser from '../components/FileBrowser';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 // This would be replaced by redux but Changeable is a handy single-value, single-event state HOC
 const Browser = Changeable(

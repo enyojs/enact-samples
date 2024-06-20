@@ -12,7 +12,7 @@ import MainPanel from '../views/MainPanel';
 
 import videos from './videos.js';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const getVideo = (index) => videos[index];
 

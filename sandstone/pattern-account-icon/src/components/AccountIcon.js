@@ -2,7 +2,7 @@ import Icon from '@enact/sandstone/Icon';
 import PropTypes from 'prop-types';
 
 // For custom style of account icon
-import css from './AccountIcon.module.less';
+import * as css from './AccountIcon.module.less';
 
 const AccountIcon = ({bgColor, children}) => {
 	const accountStyle = {

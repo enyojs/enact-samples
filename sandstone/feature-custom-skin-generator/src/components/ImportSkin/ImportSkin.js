@@ -3,7 +3,7 @@ import platform from '@enact/core/platform';
 import Dropdown from '@enact/sandstone/Dropdown';
 import PropTypes from 'prop-types';
 
-import componentCss from './ImportSkin.module.less';
+import * as componentCss from './ImportSkin.module.less';
 
 /**
  * A component that contains the dropdown used for preset selection

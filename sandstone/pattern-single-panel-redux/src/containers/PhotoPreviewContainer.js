@@ -3,7 +3,7 @@ import Image from '@enact/sandstone/Image';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import css from './containerStyles.module.less';
+import * as css from './containerStyles.module.less';
 
 const PhotoPreview = kind({
 	name: 'PhotoPreview',

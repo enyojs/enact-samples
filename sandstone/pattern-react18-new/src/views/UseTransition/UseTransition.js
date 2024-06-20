@@ -10,7 +10,7 @@ import {Suspense, useState, useTransition} from 'react';
 import Content, {ContentUseTransition} from './Content';
 import {fetchDataUseTransition} from './FakeApi';
 
-import css from './UseTransition.module.less';
+import * as css from './UseTransition.module.less';
 
 const initialResource = fetchDataUseTransition();
 

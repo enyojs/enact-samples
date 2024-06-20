@@ -1,7 +1,7 @@
 import Button from '@enact/agate/Button';
 import {Link} from 'react-router-dom';
 
-import css from './ButtonToSamples.module.less';
+import * as css from './ButtonToSamples.module.less';
 
 const ButtonToSamples = () => (
 	<div className={css.buttonContainer}>

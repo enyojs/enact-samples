@@ -4,7 +4,7 @@ import {Panels} from '@enact/moonstone/Panels';
 
 import MainPanel from '../views/MainPanel';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const AppBase = kind({
 	name: 'App',

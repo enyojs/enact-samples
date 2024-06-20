@@ -2,7 +2,7 @@ import kind from '@enact/core/kind';
 
 import MainPanel from '../views/MainPanel';
 
-import css from './App.module.less';
+import * as css from './App.module.less';
 
 const App = kind({
 	name: 'App',

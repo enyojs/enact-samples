@@ -3,7 +3,7 @@ import kind from '@enact/core/kind';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 
-import css from './componentStyles.module.less';
+import * as css from './componentStyles.module.less';
 
 const PhotoSlider = kind({
 	name: 'PhotoSlider',

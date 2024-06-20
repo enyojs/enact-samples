@@ -3,7 +3,7 @@ import Button from '@enact/ui/Button';
 import Group from '@enact/ui/Group';
 import PropTypes from 'prop-types';
 
-import css from './Nav.module.less';
+import * as css from './Nav.module.less';
 
 const Nav = kind({
 	name: 'Nav',

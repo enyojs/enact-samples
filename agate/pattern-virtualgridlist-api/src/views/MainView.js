@@ -6,7 +6,7 @@ import ImageList from '../components/ImageList';
 import SideBar from '../components/SideBar';
 import {changeAlbum} from '../store';
 
-import css from './MainView.module.less';
+import * as css from './MainView.module.less';
 
 const albums = ['Family', 'Car', 'Travel'];
 

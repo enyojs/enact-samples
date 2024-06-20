@@ -2,7 +2,7 @@ import kind from '@enact/core/kind';
 import Slider from '@enact/moonstone/Slider';
 import PropTypes from 'prop-types';
 
-import css from './componentStyles.module.less';
+import * as css from './componentStyles.module.less';
 
 const PhotoSlider = kind({
 	name: 'PhotoSlider',

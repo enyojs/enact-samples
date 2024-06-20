@@ -8,7 +8,7 @@ import AccountIcon from '../components/AccountIcon';
 
 // In sandstone theme, the text color changes to gray tone when the button is focused.
 // A custom style is needed to prevent this and maintain the white tone text color.
-import css from './MainPanel.module.less';
+import * as css from './MainPanel.module.less';
 
 const MainPanel = kind({
 	name: 'MainPanel',
