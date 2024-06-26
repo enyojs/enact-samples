@@ -34,11 +34,11 @@
     "@enact/sandstone": "^2.8.0",
     "@enact/spotlight": "^4.8.0",
     "@enact/ui": "^4.8.0",
-    "hls.js": "^1.5.8",
+    "hls.js": "^1.5.11",
     "ilib": "^14.20.0",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "eslint-config-enact-proxy": "^1.0.7"
