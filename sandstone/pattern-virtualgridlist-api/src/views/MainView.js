@@ -21,7 +21,7 @@ const MainView = ({onChangeAlbum}) => {
 	useEffect(() => {
 		// Below is an example of using scrollTo method for setting an "initial" position of VirtualList.
 		// It is a substitute for focusOnIndex, setInitialFocusIndex, and scrollToItem of enyo.
-		scrollToRef.current({index: 60, animate: false, focus: true});
+		//scrollToRef.current({index: 60, animate: false, focus: true});
 	}, []);
 
 	const onChange = useCallback(({album}) => {
