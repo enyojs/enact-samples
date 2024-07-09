@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate</title>
+</head>
+
+<body style="display: flex; flex-direction: column;">
+<div style="align-self: center;">
+    <button id="write-file-button">Generate</button>
+    <button id="save-dir">Save to directory</button>
+</div>
+<code id="code" style="padding-top: 20px;"></code>
+
+<script>
+
+	document.getElementById('write-file-button').addEventListener('click', () => {
+		parent.postMessage({ pluginMessage: { type: 'create' } }, '*');
+	});
+
+	document.getElementById('save-dir').addEventListener('click', async () => {
+		const data = document.getElementById("code").innerText
+		if (!!data) {
+			const blob = new Blob([data], { type: 'text/javascript' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'File.js';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		} else {
+			alert("Generate the code first!")
+		}
+	});
+
+	window.onmessage = (event) => {
+		const msg = event.data.pluginMessage;
+
+		if (msg.type === 'show-code') {
+			const div = document.getElementById("code");
+			div.innerText = msg.data;
+		}
+	}
+</script>
+</body>
+
+</html>

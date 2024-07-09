@@ -1,0 +1,49 @@
+{
+	"name": "enact-figma-app",
+	"version": "1.0.0",
+	"description": "A template for an Enact Sandstone application generated from Figma.",
+	"author": "",
+	"main": "src/index.js",
+	"scripts": {
+		"serve": "enact serve",
+		"pack": "enact pack",
+		"pack-p": "enact pack -p",
+		"watch": "enact pack --watch",
+		"clean": "enact clean",
+		"lint": "enact lint .",
+		"license": "enact license",
+		"test": "enact test",
+		"test-watch": "enact test --watch"
+	},
+	"license": "UNLICENSED",
+	"private": true,
+	"repository": "",
+	"enact": {
+		"theme": "sandstone"
+	},
+	"eslintConfig": {
+		"extends": "enact-proxy"
+	},
+	"eslintIgnore": [
+		"node_modules/*",
+		"build/*",
+		"dist/*"
+	],
+	"dependencies": {
+		"@enact/core": "^4.8.0",
+		"@enact/i18n": "^4.8.0",
+		"@enact/sandstone": "^2.8.0",
+		"@enact/spotlight": "^4.8.0",
+		"@enact/ui": "^4.8.0",
+		"fs": "^0.0.1-security",
+		"ilib": "^14.19.0",
+		"prop-types": "^15.8.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"styled-components": "^6.1.11",
+		"web-vitals": "^3.5.1"
+	},
+	"devDependencies": {
+		"eslint-config-enact-proxy": "^1.0.7"
+	}
+}
