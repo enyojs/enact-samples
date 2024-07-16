@@ -17,6 +17,7 @@ import {appElementBase as PatternRoutablePanels} from '../../../pattern-routable
 import {AppBase as PatternSinglePanel} from '../../../pattern-single-panel/src/App/App';
 import {appElementBase as PatternSinglePanelRedux} from '../../../pattern-single-panel-redux/src/main';
 import {AppBase as PatternVideoPlayer} from '../../../pattern-video-player/src/App/App';
+import {AppBase as PatternVideoPlayerGoogleAds} from '../../../pattern-video-player-google-ads/src/App/App';
 import {appElementBase as PatternVirtualgridlistApi} from '../../../pattern-virtualgridlist-api/src/main';
 import {appElementBase as PatternVirtuallistPreservingFocus} from '../../../pattern-virtuallist-preserving-focus/src/main';
 import {AppBase as TutorialHelloEnact} from '../../../tutorial-hello-enact/src/App/App';
@@ -76,6 +77,7 @@ const routes = [
 	{path: '/PatternSinglePanelRedux', element: <PatternSinglePanelRedux />},
 	{path: '/PatternVideoPlayer', element: <PatternVideoPlayer />},
 	{path: '/PatternVideoPlayerCustom', element: <PatternVideoPlayerCustom />},
+	{path: '/PatternVideoPlayerGoogleAds', element: <PatternVideoPlayerGoogleAds />},
 	{path: '/PatternVirtualgridlistApi', element: <PatternVirtualgridlistApi />},
 	{path: '/PatternVirtuallistPreservingFocus', element: <PatternVirtuallistPreservingFocus />},
 	{path: '/TutorialHelloEnact', element: <TutorialHelloEnact />},
