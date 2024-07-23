@@ -1,6 +1,4 @@
-import CustomComponent from "./component.class";
-
-class ComponentNode {
+class EnactComponentNode {
 	private childrenComponents: object;
 	private componentName: string;
 	private componentNode: string;
@@ -28,16 +26,16 @@ class ComponentNode {
 		let selected = false;
 
 		const placeholder = this.childrenComponents[0] ?? "";
-		const searchValue = `<${this.componentName}`;
-		let replaceValue = '';
+		const tag = `<${this.componentName}`;
+		let tagWithProps = '';
 
 		switch (this.componentName) {
 			case 'ActionGuide':
-				this.componentNode = this.componentNode.replace(searchValue, `<${this.componentName} buttonAriaLabel={"More"} icon={"arrowsmalldown"}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} buttonAriaLabel={"More"} icon={"arrowsmalldown"}`);
 				return this;
 			case 'BodyText':
-				replaceValue = `<${this.componentName} centered noWrap size={'large'}`;
-				this.componentNode = this.componentNode.replace(searchValue, replaceValue);
+				tagWithProps = `<${this.componentName} centered noWrap size={'large'}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Button':
 				disabled = (componentProps.componentProperties.State.value as string).includes('deactivated');
@@ -45,12 +43,12 @@ class ComponentNode {
 			case 'Checkbox':
 				disabled = this.checkForDisabled((componentProps.parent as InstanceNode).componentProperties);
 				selected = this.checkForSelected((componentProps.parent as InstanceNode).componentProperties);
-				replaceValue = `<${this.componentName} disabled={${disabled}} selected={${selected}} indeterminate={false} indeterminateIcon={'minus'} onToggle={'/*Toggle Action*/'}`;
-				this.componentNode = this.componentNode.replace(searchValue, replaceValue)
+				tagWithProps = `<${this.componentName} disabled={${disabled}} selected={${selected}} indeterminate={false} indeterminateIcon={'minus'} onToggle={'/*Toggle Action*/'}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps)
 				return this;
 			case 'Input':
-				replaceValue = `<${this.componentName} placeholder={"${placeholder}"}`;
-				this.componentNode = this.componentNode.replace(searchValue, replaceValue);
+				tagWithProps = `<${this.componentName} placeholder={"${placeholder}"}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			default:
 				return this;
@@ -59,8 +57,8 @@ class ComponentNode {
 
 	// Add styling to the created component node
 	addComponentStyle(styles) {
-		const colorIndex = this.componentName === 'ActionGuide' ? 1 : 0;
-		const searchValue = `<${this.componentName}`;
+		const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0;
+		const tag = `<${this.componentName}`;
 
 		const {
 			backgroundColor: componentBackgroundColor,
@@ -75,15 +73,16 @@ class ComponentNode {
 
 		switch (this.componentName) {
 			case 'ActionGuide':
-				this.componentNode = this.componentNode.replace(searchValue, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
 				return this;
 			case 'BodyText':
 			case 'Button':
 			case 'Checkbox':
-				this.componentNode = this.componentNode.replace(searchValue, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
+			case 'CheckboxItem':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
 				return this;
 			case 'Input':
-				this.componentNode = this.componentNode.replace(searchValue, `<${this.componentName} style={{${backgroundColor}, ${color}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${backgroundColor}, ${color}, ${topLeftPosition}}}`);
 				return this;
 			default:
 				return this;
@@ -105,6 +104,9 @@ class ComponentNode {
 			case 'Checkbox':
 				this.componentNode = `<${this.componentName}>{/*Icon Name*/}</${this.componentName}>`;
 				return this;
+			case 'CheckboxItem':
+				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
+				return this;
 			case 'Input':
 				this.componentNode = `<${this.componentName} />`
 				return this;
@@ -114,4 +116,4 @@ class ComponentNode {
 	}
 }
 
-export default ComponentNode;
+export default EnactComponentNode;

@@ -22,12 +22,13 @@ const extractComponentProps = (component, componentName: string) => {
 		return extractComponentProps(component.children[0], componentName);
 	}
 
-	if (componentName === 'ActionGuide') {
+	if (componentName === 'ActionGuide' || componentName === 'CheckboxItem') {
 		return component.parent.parent;
 	}
+
 	return component.parent;
 }
 
-const generateCode = (content) => {
+const generateCode = (content: string) => {
 	figma.ui.postMessage({type: 'show-code', data: content})
 }

@@ -1,5 +1,5 @@
 import CustomComponent from "../types/component.class";
-import ComponentNode from "../types/componentNode.class";
+import EnactComponentNode from "../types/componentNode.class";
 
 // Convert Figma RGB color to CSS RGB color
 const convertToRGB = (color: { r: number, g: number, b: number }) => {
@@ -13,8 +13,24 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 // Extract component props from Figma design
 const extractComponentProps = (component: CustomComponent) => {
 	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
-	const childrenColors = component.childrenProps.map(childrenProps => childrenProps.fills.length > 0 ? convertToRGB(childrenProps.fills[0].color) : undefined);
-	const childrenComponents = component.childrenProps.map(childrenProps => childrenProps.characters ?? childrenProps);
+	const childrenColors = component.childrenProps.map(childrenProps => {
+		if (component.componentName === 'CheckboxItem' && !!childrenProps.children[0].children) {
+			return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
+		}
+
+		if (childrenProps.fills.length > 0) {
+			return convertToRGB(childrenProps.fills[0].color);
+		}
+
+		return undefined;
+	});
+	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
+		if (component.componentName === 'CheckboxItem' && index === 1) {
+			return childrenProps.children[0].children[0].characters ?? childrenProps;
+		}
+
+		return childrenProps.characters ?? childrenProps;
+	});
 
 	return {componentColors, childrenColors, childrenComponents}
 }
@@ -36,7 +52,7 @@ const createComponentNode = (component: CustomComponent) => {
 		width: width
 	}
 
-	const componentNode = new ComponentNode(childrenComponents, componentName);
+	const componentNode = new EnactComponentNode(childrenComponents, componentName);
 	componentNode.createComponent()
 		.addComponentStyle(componentStyles)
 		.addComponentProps(componentProps);
