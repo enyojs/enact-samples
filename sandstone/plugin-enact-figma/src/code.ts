@@ -1,4 +1,4 @@
-import generateEnactCode from "./utils/generateEnactCode";
+import generateEnactCode from './utils/generateEnactCode';
 
 // Show the UI to the user
 figma.showUI(__html__, { width: 600, height: 400 });

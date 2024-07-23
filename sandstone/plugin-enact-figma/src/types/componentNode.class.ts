@@ -20,14 +20,17 @@ class EnactComponentNode {
 		return componentProperties.Type.value === 'selected';
 	}
 
-	// Add props to the component node
-	addComponentProps(componentProps: InstanceNode) {
+    // Add props to the component node
+    addComponentProps(componentProps: InstanceNode) {
+        const placeholder = this.childrenComponents[0] ?? "";
+        const subtitle = this.childrenComponents[1] ?? "";
+        const title = this.childrenComponents[0] ?? "";
+
 		let disabled = false;
 		let selected = false;
 
-		const placeholder = this.childrenComponents[0] ?? "";
-		const tag = `<${this.componentName}`;
-		let tagWithProps = '';
+        const tag = `<${this.componentName}`;
+        let tagWithProps = '';
 
 		switch (this.componentName) {
 			case 'ActionGuide':
@@ -46,6 +49,10 @@ class EnactComponentNode {
 				tagWithProps = `<${this.componentName} disabled={${disabled}} selected={${selected}} indeterminate={false} indeterminateIcon={'minus'} onToggle={'/*Toggle Action*/'}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps)
 				return this;
+			case 'Header':
+				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
+				return this;
 			case 'Input':
 				tagWithProps = `<${this.componentName} placeholder={"${placeholder}"}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
@@ -63,12 +70,15 @@ class EnactComponentNode {
 		const {
 			backgroundColor: componentBackgroundColor,
 			color: componentColor,
+			height: componentHeight,
+			left: leftSize,
 			top: topSize,
-			left: leftSize
+			width: componentWidth
 		} = styles;
 
 		const backgroundColor = !!componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
 		const color = !!componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : '';
+		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
 		const topLeftPosition = `position: 'absolute', top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
 		switch (this.componentName) {
@@ -80,6 +90,9 @@ class EnactComponentNode {
 			case 'Checkbox':
 			case 'CheckboxItem':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
+				return this;
+			case 'Header':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}, ${size}}}`);
 				return this;
 			case 'Input':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${backgroundColor}, ${color}, ${topLeftPosition}}}`);
@@ -107,6 +120,7 @@ class EnactComponentNode {
 			case 'CheckboxItem':
 				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
 				return this;
+			case 'Header':
 			case 'Input':
 				this.componentNode = `<${this.componentName} />`
 				return this;

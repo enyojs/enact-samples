@@ -1,6 +1,6 @@
-import createComponentsImports from "./createComponentsImports";
-import CustomComponent from "../types/component.class";
-import createComponentNode from "./createComponentNode";
+import createComponentImport from './createComponentImport';
+import createComponentNode from './createComponentNode';
+import CustomComponent from '../types/component.class';
 
 const createComponents = (components: CustomComponent[]) => {
 	const allComponents = components.map((component, index) => {
@@ -16,7 +16,7 @@ const createComponents = (components: CustomComponent[]) => {
 }
 
 const generateEnactCode = (components: CustomComponent[]) => {
-	return `${createComponentsImports(components)}
+    return `${createComponentImport(components)}
 import kind from '@enact/core/kind';
 import {Panel} from '@enact/sandstone/Panels';
 import ri from '@enact/ui/resolution';

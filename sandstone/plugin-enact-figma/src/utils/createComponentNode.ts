@@ -1,5 +1,5 @@
-import CustomComponent from "../types/component.class";
-import EnactComponentNode from "../types/componentNode.class";
+import CustomComponent from '../types/component.class';
+import EnactComponentNode from '../types/componentNode.class';
 
 // Convert Figma RGB color to CSS RGB color
 const convertToRGB = (color: { r: number, g: number, b: number }) => {
@@ -37,7 +37,7 @@ const extractComponentProps = (component: CustomComponent) => {
 
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
-	const {componentColors, childrenColors, childrenComponents} = extractComponentProps(component)
+	const {componentColors, childrenColors, childrenComponents} = extractComponentProps(component);
 	const {componentProps} = component;
 
 	const {componentName, x, y} = component;
