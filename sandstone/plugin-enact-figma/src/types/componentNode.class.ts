@@ -28,7 +28,7 @@ class EnactComponentNode {
 				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
-			case 'Input':
+			case 'InputField':
 				tagWithProps = `<${this.componentName} placeholder='${placeholder}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
@@ -58,13 +58,9 @@ class EnactComponentNode {
 
 		switch (this.componentName) {
 			case 'Button':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}}}`);
-				return this;
 			case 'Header':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${color}, ${topLeftPosition}, ${size}}}`);
-				return this;
-			case 'Input':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${backgroundColor}, ${color}, ${topLeftPosition}}}`);
+			case 'InputField':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${topLeftPosition}}}`);
 				return this;
 			default:
 				return this;
@@ -78,7 +74,7 @@ class EnactComponentNode {
 				this.componentNode = !!this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
 				return this;
 			case 'Header':
-			case 'Input':
+			case 'InputField':
 				this.componentNode = `<${this.componentName} />`
 				return this;
 			default:
