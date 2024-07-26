@@ -12,9 +12,11 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 
 // Extract component props from Figma design
 const extractComponentProps = (component: CustomComponent) => {
+	const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
+
 	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
 	const childrenColors = component.childrenProps.map(childrenProps => {
-		if (component.componentName === 'CheckboxItem' && !!childrenProps.children[0].children) {
+		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
 			return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
 		}
 
@@ -25,7 +27,7 @@ const extractComponentProps = (component: CustomComponent) => {
 		return undefined;
 	});
 	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
-		if (component.componentName === 'CheckboxItem' && index === 1) {
+		if (componentsNames.includes(component.componentName) && index === 1) {
 			return childrenProps.children[0].children[0].characters ?? childrenProps;
 		}
 

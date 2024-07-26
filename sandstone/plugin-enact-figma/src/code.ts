@@ -18,11 +18,13 @@ figma.ui.onmessage = (msg) => {
 };
 
 const extractComponentProps = (component, componentName: string) => {
+	const componentsNames = ['ActionGuide', 'CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
+
 	if (typeof component.children !== 'undefined') {
 		return extractComponentProps(component.children[0], componentName);
 	}
 
-	if (componentName === 'ActionGuide' || componentName === 'CheckboxItem') {
+	if (componentsNames.includes(componentName)) {
 		return component.parent.parent;
 	}
 
