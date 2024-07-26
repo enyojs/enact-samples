@@ -13,12 +13,13 @@ const createComponents = (components: CustomComponent[]) => {
 		});
 
 	return allComponents.toString().replace(/,</g, '\t\t\t<');
-}
+};
 
 const generateEnactCode = (components: CustomComponent[]) => {
 	return `${createComponentImport(components)}
 import kind from '@enact/core/kind';
 import {Panel} from '@enact/sandstone/Panels';
+import Scroller from '@enact/sandstone/Scroller';
 import ri from '@enact/ui/resolution';
 
 const MainPanel = kind({
@@ -26,12 +27,14 @@ const MainPanel = kind({
 
     render: (props) => (
         <Panel {...props}>
+        	<Scroller>
 		${createComponents(components)}
+		</Scroller>
         </Panel>
     )
 });
 
-export default MainPanel;`
-}
+export default MainPanel;`;
+};
 
 export default generateEnactCode;

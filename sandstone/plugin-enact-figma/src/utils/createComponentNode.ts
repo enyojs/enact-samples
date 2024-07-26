@@ -8,7 +8,7 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 	const blue = Math.round(color.b * 255);
 
 	return {red, green, blue};
-}
+};
 
 // Extract component props from Figma design
 const extractComponentProps = (component: CustomComponent) => {
@@ -16,8 +16,8 @@ const extractComponentProps = (component: CustomComponent) => {
 	const childrenColors = component.childrenProps.map(childrenProps => childrenProps.fills.length > 0 ? convertToRGB(childrenProps.fills[0].color) : undefined);
 	const childrenComponents = component.childrenProps.map(childrenProps => childrenProps.characters ?? childrenProps);
 
-	return {componentColors, childrenColors, childrenComponents}
-}
+	return {componentColors, childrenColors, childrenComponents};
+};
 
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
@@ -32,7 +32,7 @@ const createComponentNode = (component: CustomComponent) => {
 		left: x,
 		height: height,
 		width: width
-	}
+	};
 
 	const componentNode = new EnactComponentNode(childrenComponents, componentName);
 	componentNode.createComponent()
@@ -40,7 +40,7 @@ const createComponentNode = (component: CustomComponent) => {
 		.addComponentProps();
 
 	const generatedNode = componentNode.generatedComponentNode;
-	return !!generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';
-}
+	return generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';
+};
 
 export default createComponentNode;
