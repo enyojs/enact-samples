@@ -39,12 +39,12 @@ class EnactComponentNode {
 
 	// Add styling to the created component node
 	addComponentStyle (styles) {
-		const colorIndex = 0;
+		// const colorIndex = 0;
 		const tag = `<${this.componentName}`;
 
 		const {
-			backgroundColor: componentBackgroundColor,
-			color: componentColor,
+			// backgroundColor: componentBackgroundColor,
+			// color: componentColor,
 			height: componentHeight,
 			left: leftSize,
 			top: topSize,
