@@ -104,8 +104,8 @@ class EnactComponentNode {
 				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
-			case 'Input':
-				tagWithProps = `<${this.componentName} placeholder={'${placeholder}'}`;
+			case 'InputField':
+				tagWithProps = `<${this.componentName} placeholder='${placeholder}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			default:
@@ -163,10 +163,8 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
 				return this;
 			case 'Header':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
-				return this;
-			case 'Input':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${backgroundColor}, ${topLeftPosition}}}`);
+			case 'InputField':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${topLeftPosition}}}`);
 				return this;
 			default:
 				return this;
@@ -218,7 +216,7 @@ class EnactComponentNode {
 				return this;
 			case 'IconItem':
 			case 'Header':
-			case 'Input':
+			case 'InputField':
 				this.componentNode = `<${this.componentName} />`;
 				return this;
 			default:
