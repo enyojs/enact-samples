@@ -13,7 +13,7 @@ const createComponents = (components: CustomComponent[]) => {
 		});
 
 	return allComponents.toString().replace(/,</g, '\t\t\t<');
-}
+};
 
 const generateEnactCode = (components: CustomComponent[]) => {
 	return `${createComponentImport(components)}
@@ -34,7 +34,7 @@ const MainPanel = kind({
     )
 });
 
-export default MainPanel;`
-}
+export default MainPanel;`;
+};
 
 export default generateEnactCode;
