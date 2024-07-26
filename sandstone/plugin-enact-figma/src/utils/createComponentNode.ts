@@ -8,12 +8,13 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 	const blue = Math.round(color.b * 255);
 
 	return {red, green, blue};
-}
+};
 
 // Extract component props from Figma design
 const extractComponentProps = (component: CustomComponent) => {
 	const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
 
+	// eslint-disable-next-line
 	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
 	const childrenColors = component.childrenProps.map(childrenProps => {
 		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
@@ -24,6 +25,7 @@ const extractComponentProps = (component: CustomComponent) => {
 			return convertToRGB(childrenProps.fills[0].color);
 		}
 
+		// eslint-disable-next-line
 		return undefined;
 	});
 	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
@@ -34,8 +36,8 @@ const extractComponentProps = (component: CustomComponent) => {
 		return childrenProps.characters ?? childrenProps;
 	});
 
-	return {componentColors, childrenColors, childrenComponents}
-}
+	return {componentColors, childrenColors, childrenComponents};
+};
 
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
@@ -52,7 +54,7 @@ const createComponentNode = (component: CustomComponent) => {
 		left: x,
 		height: height,
 		width: width
-	}
+	};
 
 	const componentNode = new EnactComponentNode(childrenComponents, componentName);
 	componentNode.createComponent()
@@ -60,7 +62,7 @@ const createComponentNode = (component: CustomComponent) => {
 		.addComponentProps(componentProps);
 
 	const generatedNode = componentNode.generatedComponentNode;
-	return !!generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';
-}
+	return generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';
+};
 
 export default createComponentNode;

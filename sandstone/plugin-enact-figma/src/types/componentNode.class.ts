@@ -3,24 +3,24 @@ class EnactComponentNode {
 	private componentName: string;
 	private componentNode: string;
 
-	constructor(childrenComponents: object, componentName: string) {
+	constructor (childrenComponents: object, componentName: string) {
 		this.childrenComponents = childrenComponents;
 		this.componentName = componentName;
 	}
 
-	get generatedComponentNode() {
+	get generatedComponentNode () {
 		return this.componentNode;
 	}
 
-	private checkForDisabled(componentProperties): boolean {
+	private checkForDisabled (componentProperties): boolean {
 		return componentProperties.State.value.includes('deactivated');
 	}
 
-	private checkForSelected(componentProperties): boolean {
+	private checkForSelected (componentProperties): boolean {
 		return componentProperties.Type.value === 'selected';
 	}
 
-	private extractIconName(componentProperties): string {
+	private extractIconName (componentProperties): string {
 		// Names must match the Icon names defined in Sandstone library
 		if (componentProperties.name.includes('ic_')) {
 			const iconName = componentProperties.name.split('_').slice(1, -1).toString().replace(/,/g, '');
@@ -30,17 +30,17 @@ class EnactComponentNode {
 		}
 	}
 
-    // Add props to the component node
-    addComponentProps(componentProps: InstanceNode) {
-        const placeholder = this.childrenComponents[0] ?? "";
-        const subtitle = this.childrenComponents[1] ?? "";
-        const title = this.childrenComponents[0] ?? "";
+	// Add props to the component node
+	addComponentProps (componentProps: InstanceNode) {
+		const placeholder = this.childrenComponents[0] ?? "";
+		const subtitle = this.childrenComponents[1] ?? "";
+		const title = this.childrenComponents[0] ?? "";
 
 		let disabled = false;
 		let selected = false;
 
-        const tag = `<${this.componentName}`;
-        let tagWithProps = '';
+		const tag = `<${this.componentName}`;
+		let tagWithProps = '';
 
 		switch (this.componentName) {
 			case 'ActionGuide':
@@ -59,20 +59,20 @@ class EnactComponentNode {
 			case 'Checkbox':
 				disabled = this.checkForDisabled((componentProps.parent as InstanceNode).componentProperties);
 				selected = this.checkForSelected((componentProps.parent as InstanceNode).componentProperties);
-				tagWithProps = `<${this.componentName} disabled={${disabled}} selected={${selected}} indeterminate={false} indeterminateIcon={'minus'} onToggle={() => {}}`;
-				this.componentNode = this.componentNode.replace(tag, tagWithProps)
+				tagWithProps = `<${this.componentName} disabled={${disabled}} indeterminate={false} indeterminateIcon={'minus'} onToggle={() => {}} selected={${selected}}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'CheckboxItem':
-				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`
-				this.componentNode = this.componentNode.replace(tag, tagWithProps)
+				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'ContextualMenuDecorator':
 				tagWithProps = `<ContextualMenuButton direction={'below right'} menuItems={['Option 1']} popupWidth={'auto'}`;
-				this.componentNode = this.componentNode.replace('<ContextualMenuButton', tagWithProps)
+				this.componentNode = this.componentNode.replace('<ContextualMenuButton', tagWithProps);
 				return this;
 			case 'ContextualPopupDecorator':
-				tagWithProps = `<ContextualPopupButton onClose={() => {}} onOpen={() => {}} popupComponent={popupComponent} direction={'below right'}`;
-				this.componentNode = this.componentNode.replace('<ContextualPopupButton', tagWithProps)
+				tagWithProps = `<ContextualPopupButton direction={'below right'} onClose={() => {}} onOpen={() => {}} popupComponent={popupComponent}`;
+				this.componentNode = this.componentNode.replace('<ContextualPopupButton', tagWithProps);
 				return this;
 			case 'DatePicker':
 				tagWithProps = `<${this.componentName} noLabel={true}`;
@@ -89,16 +89,16 @@ class EnactComponentNode {
 			// 	tagWithProps = `<${this.componentName} open={open}`;
 			// 	return this;
 			case 'FormCheckboxItem':
-				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`
-				this.componentNode = this.componentNode.replace(tag, tagWithProps)
+				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Icon':
 				tagWithProps = `<${this.componentName} size={'small'}`;
-				this.componentNode = this.componentNode.replace(tag, tagWithProps)
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'IconItem':
 				tagWithProps = `<${this.componentName} bordered icon={'info'} label={'${this.childrenComponents[0]}'}`;
-				this.componentNode = this.componentNode.replace(tag, tagWithProps)
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Header':
 				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
@@ -114,21 +114,21 @@ class EnactComponentNode {
 	}
 
 	// Add styling to the created component node
-	addComponentStyle(styles) {
-		const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0;
+	addComponentStyle (styles) {
+		// const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0; /* To be decided if the color will be used */
 		const tag = `<${this.componentName}`;
 
 		const {
 			backgroundColor: componentBackgroundColor,
-			color: componentColor,
+			// color: componentColor, /* To be decided if the color will be used */
 			height: componentHeight,
 			left: leftSize,
 			top: topSize,
 			width: componentWidth
 		} = styles;
 
-		const backgroundColor = !!componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
-		// const color = !!componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : '';
+		const backgroundColor = componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
+		// const color = !!componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : ''; /* To be decided if the color will be used */
 		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
 		const topLeftPosition = `position: 'absolute', top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
@@ -153,7 +153,6 @@ class EnactComponentNode {
 			case 'DatePicker':
 			case 'DayPicker':
 			case 'Dropdown':
-			// case 'FlexiblePopupPanels':
 			case 'FormCheckboxItem':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
 				return this;
@@ -175,16 +174,18 @@ class EnactComponentNode {
 	}
 
 	// Create component node
-	public createComponent() {
+	public createComponent () {
+		let iconName = '';
+
 		switch (this.componentName) {
 			case 'ActionGuide':
 				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
 				return this;
 			case 'BodyText':
-				this.componentNode = !!this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
+				this.componentNode = this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
 				return this;
 			case 'Button':
-				this.componentNode = !!this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
+				this.componentNode = this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
 				return this;
 			case 'Checkbox':
 				this.componentNode = `<${this.componentName}>{/*Icon Name*/}</${this.componentName}>`;
@@ -212,13 +213,13 @@ class EnactComponentNode {
 				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
 				return this;
 			case 'Icon':
-				const iconName = this.extractIconName(this.childrenComponents[0]);
+				iconName = this.extractIconName(this.childrenComponents[0]);
 				this.componentNode = `<${this.componentName}>${iconName}</${this.componentName}>`;
 				return this;
 			case 'IconItem':
 			case 'Header':
 			case 'Input':
-				this.componentNode = `<${this.componentName} />`
+				this.componentNode = `<${this.componentName} />`;
 				return this;
 			default:
 				return this;

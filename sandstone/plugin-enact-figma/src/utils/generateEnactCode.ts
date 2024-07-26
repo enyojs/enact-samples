@@ -14,26 +14,26 @@ const createComponents = (components: CustomComponent[]) => {
 		});
 
 	return allComponents.toString().replace(/,</g, '\t\t\t<');
-}
+};
 
 const addAdditionalContentForContextualDecorator = (menuDecorator: boolean, popupDecorator: boolean) => {
 	let content = [];
 	if (menuDecorator) {
-		content.push('const ContextualMenuButton = ContextualMenuDecorator(Button); // Instead of button can be other component');
+		content.push('const ContextualMenuButton = ContextualMenuDecorator(Button); // Instead of button it can be any other component');
 	}
 	if (popupDecorator) {
-		content.push('const ContextualPopupButton = ContextualPopupDecorator(Button); // Instead of button can be other component');
+		content.push('const ContextualPopupButton = ContextualPopupDecorator(Button); // Instead of button it can be any other component');
 		content.push('const popupComponent = () => <div>Hello Contextual Popup</div>;');
 	}
 
 	return content.toString().replace(/,/g, '\n');
-}
+};
 
 const generateEnactCode = (components: CustomComponent[]) => {
 	const isContextualMenuDecorator = !!components.find(component => component.componentName === 'ContextualMenuDecorator');
 	const isContextualPopupDecorator = !!components.find(component => component.componentName === 'ContextualPopupDecorator');
 
-    return `${createComponentImport(components)}
+	return `${createComponentImport(components)}
 import kind from '@enact/core/kind';
 import {Panel} from '@enact/sandstone/Panels';
 import ri from '@enact/ui/resolution';
@@ -48,7 +48,7 @@ const MainPanel = kind({
     )
 });
 
-export default MainPanel;`
-}
+export default MainPanel;`;
+};
 
 export default generateEnactCode;
