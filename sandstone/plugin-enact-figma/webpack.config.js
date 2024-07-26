@@ -24,7 +24,7 @@ module.exports = (env, argv) => ({
 	},
 	output: {
 		filename: '[name].js',
-		// eslint-disable-next-line
+		// eslint-disable-next-line no-undef
 		path: path.resolve(__dirname, 'dist')
 	}
 });

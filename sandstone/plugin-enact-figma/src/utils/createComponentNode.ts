@@ -14,7 +14,7 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 const extractComponentProps = (component: CustomComponent) => {
 	const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
 
-	// eslint-disable-next-line
+	// eslint-disable-next-line no-undefined
 	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
 	const childrenColors = component.childrenProps.map(childrenProps => {
 		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
@@ -25,7 +25,7 @@ const extractComponentProps = (component: CustomComponent) => {
 			return convertToRGB(childrenProps.fills[0].color);
 		}
 
-		// eslint-disable-next-line
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	});
 	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
