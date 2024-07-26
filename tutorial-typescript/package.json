@@ -30,19 +30,19 @@
 		"dist/*"
 	],
 	"dependencies": {
-		"@enact/core": "^4.7.9",
-		"@enact/i18n": "^4.7.9",
-		"@enact/sandstone": "^2.7.13",
-		"@enact/spotlight": "^4.7.9",
-		"@enact/ui": "^4.7.9",
-		"@types/node": "^20.11.5",
-		"@types/react": "^18.2.48",
-		"@types/react-dom": "^18.2.18",
-		"ilib": "^14.19.0",
+		"@enact/core": "^4.8.0",
+		"@enact/i18n": "^4.8.0",
+		"@enact/sandstone": "^2.8.0",
+		"@enact/spotlight": "^4.8.0",
+		"@enact/ui": "^4.8.0",
+		"@types/node": "^20.14.9",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"ilib": "^14.20.0",
 		"prop-types": "^15.8.1",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"typescript": "^5.3.3"
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"typescript": "^5.5.2"
 	},
 	"devDependencies": {
 		"eslint-config-enact-proxy": "^1.0.7"
