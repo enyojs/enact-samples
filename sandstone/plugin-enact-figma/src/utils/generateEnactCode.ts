@@ -45,8 +45,8 @@ const MainPanel = kind({
     render: (props) => (
         <Panel {...props}>
         	<Scroller>
-			${createComponents(components)}
-			</Scroller>
+		${createComponents(components)}
+		</Scroller>
         </Panel>
     )
 });

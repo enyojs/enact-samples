@@ -119,7 +119,7 @@ class EnactComponentNode {
 		const tag = `<${this.componentName}`;
 
 		const {
-			// backgroundColor: componentBackgroundColor, /* To be decided if the color will be used */
+			// backgroundColor: componentBackgroundColor,
 			// color: componentColor, /* To be decided if the color will be used */
 			height: componentHeight,
 			left: leftSize,
@@ -127,8 +127,8 @@ class EnactComponentNode {
 			width: componentWidth
 		} = styles;
 
-		// const backgroundColor = componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : ''; /* To be decided if the color will be used */
-		// const color = !!componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : ''; /* To be decided if the color will be used */
+		// const backgroundColor = componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
+		// const color = componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : ''; /* To be decided if the color will be used */
 		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
 		const topLeftPosition = `position: 'absolute', top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
