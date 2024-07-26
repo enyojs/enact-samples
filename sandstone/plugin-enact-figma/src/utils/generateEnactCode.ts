@@ -18,19 +18,17 @@ const createComponents = (components: CustomComponent[]) => {
 const generateEnactCode = (components: CustomComponent[]) => {
 	return `${createComponentImport(components)}
 import kind from '@enact/core/kind';
-import {Panel} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
+import {Button} from '@enact/sandstone/Button';
+import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 
 const MainPanel = kind({
     name: 'MainPanel',
 
-    render: (props) => (
-        <Panel {...props}>
-        	<Scroller>
+    render: () => (
+        <Row>
 		${createComponents(components)}
-		</Scroller>
-        </Panel>
+        </Row>
     )
 });
 

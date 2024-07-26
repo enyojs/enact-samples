@@ -22,7 +22,7 @@ const extractComponentProps = (component: CustomComponent) => {
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
 	const {componentColors, childrenColors, childrenComponents} = extractComponentProps(component);
-	const {componentName, x, y} = component;
+	const {columnComponents, componentName, x, y} = component;
 	const {height, width} = component.componentProps;
 
 	const componentStyles = {
@@ -34,7 +34,7 @@ const createComponentNode = (component: CustomComponent) => {
 		width: width
 	}
 
-	const componentNode = new EnactComponentNode(childrenComponents, componentName);
+	const componentNode = new EnactComponentNode(childrenComponents, columnComponents, componentName);
 	componentNode.createComponent()
 		.addComponentStyle(componentStyles)
 		.addComponentProps();

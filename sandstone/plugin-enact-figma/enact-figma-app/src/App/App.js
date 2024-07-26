@@ -1,6 +1,5 @@
 import kind from '@enact/core/kind';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
-import Panels from '@enact/sandstone/Panels';
 
 import screenTypes from '../../screenTypes.json';
 import MainPanel from '../views/MainPanel';
@@ -17,9 +16,7 @@ const App = kind({
 
 	render: (props) => (
 		<div {...props}>
-			<Panels>
-				<MainPanel />
-			</Panels>
+			<MainPanel />
 		</div>
 	)
 });

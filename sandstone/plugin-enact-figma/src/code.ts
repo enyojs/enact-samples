@@ -6,11 +6,16 @@ figma.showUI(__html__, { width: 600, height: 400 });
 // Listen for messages from the UI
 figma.ui.onmessage = (msg) => {
 	if (msg.type === 'create') {
-		const components = (figma.currentPage.children[0] as FrameNode).children.map(children => {
+		const components = (figma.currentPage.children[0] as FrameNode).children.map((children: InstanceNode) => {
+			let columnComponents = [];
+			if (children.name === 'Column') {
+				columnComponents = children.children.map(children => extractComponentProps(children, children.name));
+			}
+
 			const componentProps = extractComponentProps(children, children.name);
 			const childrenProps = componentProps.children;
 			const componentName = children.name;
-			return { componentName, componentProps, childrenProps, x: children.x, y: children.y }
+			return { columnComponents, componentName, componentProps, childrenProps, x: children.x, y: children.y }
 		});
 
 		generateCode(generateEnactCode(components))
