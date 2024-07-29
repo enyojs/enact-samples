@@ -18,13 +18,19 @@ figma.ui.onmessage = (msg) => {
 };
 
 const extractComponentProps = (component, componentName: string) => {
+	const componentsNames = ['ActionGuide', 'CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
+
 	if (typeof component.children !== 'undefined') {
 		return extractComponentProps(component.children[0], componentName);
+	}
+
+	if (componentsNames.includes(componentName)) {
+		return component.parent.parent;
 	}
 
 	return component.parent;
 };
 
-const generateCode = (content) => {
+const generateCode = (content: string) => {
 	figma.ui.postMessage({type: 'show-code', data: content});
 };

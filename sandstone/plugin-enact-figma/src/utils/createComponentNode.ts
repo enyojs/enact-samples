@@ -12,9 +12,29 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 
 // Extract component props from Figma design
 const extractComponentProps = (component: CustomComponent) => {
+	const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
+
+	// eslint-disable-next-line no-undefined
 	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
-	const childrenColors = component.childrenProps.map(childrenProps => childrenProps.fills.length > 0 ? convertToRGB(childrenProps.fills[0].color) : undefined);
-	const childrenComponents = component.childrenProps.map(childrenProps => childrenProps.characters ?? childrenProps);
+	const childrenColors = component.childrenProps.map(childrenProps => {
+		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
+			return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
+		}
+
+		if (childrenProps.fills.length > 0) {
+			return convertToRGB(childrenProps.fills[0].color);
+		}
+
+		// eslint-disable-next-line no-undefined
+		return undefined;
+	});
+	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
+		if (componentsNames.includes(component.componentName) && index === 1) {
+			return childrenProps.children[0].children[0].characters ?? childrenProps;
+		}
+
+		return childrenProps.characters ?? childrenProps;
+	});
 
 	return {componentColors, childrenColors, childrenComponents};
 };
@@ -22,6 +42,8 @@ const extractComponentProps = (component: CustomComponent) => {
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
 	const {componentColors, childrenColors, childrenComponents} = extractComponentProps(component);
+	const {componentProps} = component;
+
 	const {componentName, x, y} = component;
 	const {height, width} = component.componentProps;
 
@@ -37,7 +59,7 @@ const createComponentNode = (component: CustomComponent) => {
 	const componentNode = new EnactComponentNode(childrenComponents, componentName);
 	componentNode.createComponent()
 		.addComponentStyle(componentStyles)
-		.addComponentProps();
+		.addComponentProps(componentProps);
 
 	const generatedNode = componentNode.generatedComponentNode;
 	return generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';
