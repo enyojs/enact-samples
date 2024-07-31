@@ -4,7 +4,8 @@ import ri from '@enact/ui/resolution';
 import {VirtualGridList} from '@enact/sandstone/VirtualList';
 import {useCallback, useState, useEffect} from 'react';
 
-const defaultSize = 10;
+const defaultSize = 30;
+const addedListSize = 10;
 
 const MainView = (props) => {
 	const [items, setItems] = useState([]);
@@ -19,7 +20,7 @@ const MainView = (props) => {
 				color = Math.floor(Math.random() * (0x1000000 - 0x101010) + 0x101010).toString(16),
 				source = `https://placehold.co/300x300/` + color + '/ffffff/png?text=Image+' + i;
 
-				newItems.push({text, subText, source});
+			newItems.push({text, subText, source});
 		}
 		setItems(newItems);
 	}, [items]);
@@ -31,7 +32,7 @@ const MainView = (props) => {
 		const newItems = Array.from(items);
 		const length = items.length;
 
-		for (let i = length; i < length + defaultSize; i++) {
+		for (let i = length; i < length + addedListSize; i++) {
 			const text = `Item ${i}`,
 				subText = `SubItem ${i}`,
 				color = Math.floor(Math.random() * (0x1000000 - 0x101010) + 0x101010).toString(16),
@@ -54,36 +55,35 @@ const MainView = (props) => {
 	const handleScrollStop = useCallback((event) => {
 		const reachedBottom = event.reachedEdgeInfo.bottom;
 
-		if(reachedBottom) {
+		if (reachedBottom) {
 			setIsFetching(true);
-		};
+		}
 	}, []);
 
 	useEffect(() => {
 		createInitialData(defaultSize);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		if(isFetching) {
+		if (isFetching) {
 			loadMoreData();
 			setIsFetching(false);
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isFetching]);
 
 	return (
 		<Panel {...props}>
 			<Header title="VirtualGridList With Infinite Scroll" />
 			<VirtualGridList
-			dataSize={items.length}
-			itemRenderer={renderItem}
-			itemSize={{minHeight: ri.scale(570), minWidth: ri.scale(688)}}
-			onScrollStop={handleScrollStop}
-		/>
+				dataSize={items.length}
+				itemRenderer={renderItem}
+				itemSize={{minHeight: ri.scale(570), minWidth: ri.scale(688)}}
+				onScrollStop={handleScrollStop}
+			/>
 		</Panel>
-	)
-}
+	);
+};
 
 export default MainView;
-

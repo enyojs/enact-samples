@@ -10,8 +10,8 @@ Run `npm install` then `npm run serve` to have the app running on [http://localh
 - `sandstone/Panels/Panel`
 - `sandstone/VirtualList/VirtualGridList`
 
-In this app, load data when scrolling reaches the bottom of the virtualgridlist. Use your API server to data fetch to load the data.
-Performance may decrease when using the onScroll handler, so use the onScrollStop handler like in the sample.
+In this app, data is loaded when scrolling reaches the bottom of the virtualgridlist. Use your API server to fetch data to load.
+Performance may decrease when using the `onScroll` handler, so use the `onScrollStop` handler like in the sample.
 
 ---
 
