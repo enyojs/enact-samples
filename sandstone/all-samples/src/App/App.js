@@ -78,7 +78,7 @@ const routes = [
 	{path: '/PatternVideoPlayer', element: <PatternVideoPlayer />},
 	{path: '/PatternVideoPlayerCustom', element: <PatternVideoPlayerCustom />},
 	{path: '/PatternVirtualgridlistApi', element: <PatternVirtualgridlistApi />},
-	{path: '/PatternVirtualgridlistInfiniteScroll', element: <PatternVirtualgridlistInfiniteScroll /> },
+	{path: '/PatternVirtualgridlistInfiniteScroll', element: <PatternVirtualgridlistInfiniteScroll />},
 	{path: '/PatternVirtuallistPreservingFocus', element: <PatternVirtuallistPreservingFocus />},
 	{path: '/TutorialHelloEnact', element: <TutorialHelloEnact />},
 	{path: '/TutorialKittenBrowser', element: <TutorialKittenBrowser />}
