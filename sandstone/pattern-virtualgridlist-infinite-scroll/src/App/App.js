@@ -24,3 +24,4 @@ const App = kind({
 });
 
 export default ThemeDecorator(App);
+export {App};
