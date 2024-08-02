@@ -1,5 +1,5 @@
 {
-	"name": "pattern-virtualgridlist-infinite-scroll",
+	"name": "pattern-virtualgridlist-incremental-load",
 	"version": "1.0.0",
 	"description": "A general template for an Enact Sandstone application.",
 	"author": "",
