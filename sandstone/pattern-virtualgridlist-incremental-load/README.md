@@ -1,6 +1,6 @@
-## VirtualGridList With Infinite Scroll Pattern
+## Incremental Data Loading in VirtualGridList Pattern
 
-A sample Enact application that shows off how to load items with infinite scroll in VirtualGridList.
+A sample Enact application that demonstrates how to load items incrementally in a VirtualGridList.
 
 Run `npm install` then `npm run serve` to have the app running on [http://localhost:8080](http://localhost:8080), where you can view it in your browser.
 
@@ -10,8 +10,8 @@ Run `npm install` then `npm run serve` to have the app running on [http://localh
 - `sandstone/Panels/Panel`
 - `sandstone/VirtualList/VirtualGridList`
 
-In this app, data is loaded when scrolling reaches the bottom of the virtualgridlist. Use your API server to fetch data to load.
-Performance may decrease when using the `onScroll` handler, so use the `onScrollStop` handler like in the sample.
+In this app, data is loaded as you scroll to the bottom of the VirtualGridList. Use your API server to fetch data to load.
+Performance may decrease when using the `onScroll` handler, so use the `onScrollStop` handler as shown in the sample.
 
 ---
 

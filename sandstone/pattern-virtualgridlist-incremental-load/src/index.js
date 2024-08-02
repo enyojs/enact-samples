@@ -2,7 +2,6 @@
 import {createRoot, hydrateRoot} from 'react-dom/client';
 
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 const appElement = (<App />);
 
@@ -16,9 +15,3 @@ if (typeof window !== 'undefined') {
 }
 
 export default appElement;
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint.
-// Learn more: https://github.com/enactjs/cli/blob/master/docs/measuring-performance.md
-reportWebVitals();

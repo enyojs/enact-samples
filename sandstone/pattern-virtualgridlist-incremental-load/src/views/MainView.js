@@ -4,8 +4,8 @@ import ri from '@enact/ui/resolution';
 import {VirtualGridList} from '@enact/sandstone/VirtualList';
 import {useCallback, useState, useEffect} from 'react';
 
-const defaultSize = 30;
-const addedListSize = 10;
+const defaultSize = 50;
+const addedListSize = 30;
 
 const MainView = (props) => {
 	const [items, setItems] = useState([]);
@@ -75,7 +75,7 @@ const MainView = (props) => {
 
 	return (
 		<Panel {...props}>
-			<Header title="VirtualGridList With Infinite Scroll" />
+			<Header title="VirtualGridList With Incremental Data Load" />
 			<VirtualGridList
 				dataSize={items.length}
 				itemRenderer={renderItem}
