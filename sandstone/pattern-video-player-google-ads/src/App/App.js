@@ -11,9 +11,9 @@ const getVideo = (index) => videos[index];
 
 const AppBase = ({className, ...rest}) => {
 	const [adsLoaded, setAdsLoaded] = useState(false);
-	const [adDisplayContainer, setAdDisplayContainer] = useState(null);
-	const [adsManager, setAdsManager] = useState(null);
 	const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
+	const adDisplayContainer = useRef(null);
+	const adsManager = useRef(null);
 	const adsRef = useRef(null);
 	const videoRef = useRef(null);
 
@@ -21,8 +21,8 @@ const AppBase = ({className, ...rest}) => {
 		if (window.google) {
 			const videoElement = videoRef.current.getVideoNode().media;
 			const onAdError = () => {
-				if (adsManager) {
-					adsManager.destroy();
+				if (adsManager.current) {
+					adsManager.current.destroy();
 				}
 			};
 			const onAdLoaded = (e) => {
@@ -42,18 +42,17 @@ const AppBase = ({className, ...rest}) => {
 				setPlayButtonDisabled(false);
 			};
 			const onAdsManagerLoaded = (e) => {
-				const _adsManager = e.getAdsManager(videoElement);
-				_adsManager.addEventListener(window.google.ima.AdErrorEvent.Type.AD_ERROR,
+				adsManager.current = e.getAdsManager(videoElement);
+				adsManager.current.addEventListener(window.google.ima.AdErrorEvent.Type.AD_ERROR,
 					onAdError);
-				_adsManager.addEventListener(window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED, onContentPauseRequested);
-				_adsManager.addEventListener(window.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED, onContentResumeRequested);
-				_adsManager.addEventListener(window.google.ima.AdEvent.Type.LOADED, onAdLoaded);
-				setAdsManager(_adsManager);
+				adsManager.current.addEventListener(window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED, onContentPauseRequested);
+				adsManager.current.addEventListener(window.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED, onContentResumeRequested);
+				adsManager.current.addEventListener(window.google.ima.AdEvent.Type.LOADED, onAdLoaded);
 				setPlayButtonDisabled(false);
 			};
 
-			const _adDisplayContainer = new window.google.ima.AdDisplayContainer(adsRef.current, videoElement);
-			const adsLoader = new window.google.ima.AdsLoader(_adDisplayContainer);
+			adDisplayContainer.current = new window.google.ima.AdDisplayContainer(adsRef.current, videoElement);
+			const adsLoader = new window.google.ima.AdsLoader(adDisplayContainer.current);
 			const adsRequest = new window.google.ima.AdsRequest();
 
 			adsLoader.addEventListener(window.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
@@ -73,8 +72,6 @@ const AppBase = ({className, ...rest}) => {
 			adsRequest.nonLinearAdSlotHeight = videoElement.clientHeight / 3;
 
 			adsLoader.requestAds(adsRequest);
-
-			setAdDisplayContainer(_adDisplayContainer);
 		}
 	}, [adsRef, adsManager]);
 
@@ -83,12 +80,12 @@ const AppBase = ({className, ...rest}) => {
 			return;
 		}
 		const videoElement = videoRef.current.getVideoNode().media;
-		adDisplayContainer.initialize();
+		adDisplayContainer.current.initialize();
 		const width = videoElement.clientWidth;
 		const height = videoElement.clientHeight;
 		try {
-			adsManager.init(width, height, window.google.ima.ViewMode.NORMAL);
-			adsManager.start();
+			adsManager.current.init(width, height, window.google.ima.ViewMode.NORMAL);
+			adsManager.current.start();
 		} catch (adError) {
 			videoElement.play();
 		}
@@ -113,7 +110,7 @@ const AppBase = ({className, ...rest}) => {
 	useEffect(() => {
 		const videoElement = videoRef.current.getVideoNode().media;
 		window.onresize = () => {
-			adsManager?.resize(videoElement.clientWidth, videoElement.clientHeight, window.google.ima.ViewMode.NORMAL);
+			adsManager.current?.resize(videoElement.clientWidth, videoElement.clientHeight, window.google.ima.ViewMode.NORMAL);
 		};
 	}, [adsManager, videoRef]);
 
