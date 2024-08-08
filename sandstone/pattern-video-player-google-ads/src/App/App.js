@@ -73,7 +73,7 @@ const AppBase = ({className, ...rest}) => {
 
 			adsLoader.requestAds(adsRequest);
 		}
-	}, [adsRef, adsManager]);
+	}, []);
 
 	const onPlay = useCallback(() => {
 		if (adsLoaded) {
@@ -90,7 +90,7 @@ const AppBase = ({className, ...rest}) => {
 			videoElement.play();
 		}
 		setAdsLoaded(true);
-	}, [adDisplayContainer, adsLoaded, adsManager, videoRef]);
+	}, [adsLoaded]);
 
 	useEffect(() => {
 		const script = document.createElement('script');
@@ -112,7 +112,7 @@ const AppBase = ({className, ...rest}) => {
 		window.onresize = () => {
 			adsManager.current?.resize(videoElement.clientWidth, videoElement.clientHeight, window.google.ima.ViewMode.NORMAL);
 		};
-	}, [adsManager, videoRef]);
+	}, []);
 
 	const {source, ...restVideo} = getVideo(0);
 
