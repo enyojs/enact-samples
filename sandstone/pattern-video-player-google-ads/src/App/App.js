@@ -17,6 +17,7 @@ const AppBase = ({className, ...rest}) => {
 	const adsRef = useRef(null);
 	const videoRef = useRef(null);
 
+	// Initializer for IMA SDK
 	const initializeIMA = useCallback(() => {
 		if (window.google) {
 			const videoElement = videoRef.current.getVideoNode().media;
@@ -51,34 +52,46 @@ const AppBase = ({className, ...rest}) => {
 				setPlayButtonDisabled(false);
 			};
 
+			// Initialize the ads loader and make an ads request
 			adDisplayContainer.current = new window.google.ima.AdDisplayContainer(adsRef.current, videoElement);
 			const adsLoader = new window.google.ima.AdsLoader(adDisplayContainer.current);
 			const adsRequest = new window.google.ima.AdsRequest();
 
+			// Add listeners for ads loader events
 			adsLoader.addEventListener(window.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
 			adsLoader.addEventListener(window.google.ima.AdErrorEvent.Type.AD_ERROR, onAdError, false);
+			
+			// Let the ads loader know when the video has ended
 			videoElement.addEventListener('ended', () => {
 				adsLoader.contentComplete();
 			});
 
+			// Ad tag url to request
 			adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?' +
 				'iu=/21775744923/external/single_ad_samples&sz=640x480&' +
 				'cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&' +
 				'gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=';
 
+			// Specify the linear and nonlinear ads slot sizes
 			adsRequest.linearAdSlotWidth = videoElement.clientWidth;
 			adsRequest.linearAdSlotHeight = videoElement.clientHeight;
 			adsRequest.nonLinearAdSlotWidth = videoElement.clientWidth / 3;
 			adsRequest.nonLinearAdSlotHeight = videoElement.clientHeight / 3;
 
+			// Pass the request to the ads loader to request ads
 			adsLoader.requestAds(adsRequest);
 		}
 	}, []);
 
+	// Handler for playing video
 	const onPlay = useCallback(() => {
+
+		// Prevent loading ads if there are already ads loaded
 		if (adsLoaded) {
 			return;
 		}
+
+		// Initialize the ad container and load ads
 		const videoElement = videoRef.current.getVideoNode().media;
 		adDisplayContainer.current.initialize();
 		const width = videoElement.clientWidth;
@@ -92,6 +105,7 @@ const AppBase = ({className, ...rest}) => {
 		setAdsLoaded(true);
 	}, [adsLoaded]);
 
+	// Import the IMA SDK
 	useEffect(() => {
 		const script = document.createElement('script');
 		script.src = "https://imasdk.googleapis.com/js/sdkloader/ima3.js";
@@ -101,12 +115,14 @@ const AppBase = ({className, ...rest}) => {
 		};
 	}, []);
 
+	// Initialize IMA SDK when the page is finished loading
 	useEffect(() => {
 		window.onload = () => {
 			initializeIMA();
 		};
 	}, [initializeIMA]);
 
+	// Resize the ads when window is resized
 	useEffect(() => {
 		const videoElement = videoRef.current.getVideoNode().media;
 		window.onresize = () => {
