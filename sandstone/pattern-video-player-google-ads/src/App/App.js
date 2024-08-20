@@ -60,7 +60,7 @@ const AppBase = ({className, ...rest}) => {
 			// Add listeners for ads loader events
 			adsLoader.addEventListener(window.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
 			adsLoader.addEventListener(window.google.ima.AdErrorEvent.Type.AD_ERROR, onAdError, false);
-			
+
 			// Let the ads loader know when the video has ended
 			videoElement.addEventListener('ended', () => {
 				adsLoader.contentComplete();
