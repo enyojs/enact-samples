@@ -16,17 +16,17 @@ const ColorPicker = memo((props) => {
 
 	const closePopup = () => {
 		setOpen(false);
-	}
+	};
 
 	const handleChangeColor = (ev) => {
 		if (open) {
 			onChange({target: {value: ev.selectedColor}});
 		}
-	}
+	};
 
 	const openPopup = () => {
 		setOpen(true);
-	}
+	};
 
 	return (
 		<div>
