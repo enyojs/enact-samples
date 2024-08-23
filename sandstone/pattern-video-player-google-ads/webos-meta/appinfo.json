@@ -1,7 +1,7 @@
 {
   "id": "com.enactjs.app.pattern-video-player-google-ads",
   "version": "1.0.0",
-  "vendor": "LGE-SVL",
+  "vendor": "LGE",
   "type": "web",
   "main": "index.html",
   "title": "Video Player Google Ads Pattern",
