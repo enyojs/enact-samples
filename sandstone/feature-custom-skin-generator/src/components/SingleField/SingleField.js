@@ -1,4 +1,5 @@
 import kind from '@enact/core/kind';
+import platform from '@enact/core/platform';
 import BodyText from '@enact/sandstone/BodyText';
 import {InputField} from '@enact/sandstone/Input';
 import {Cell, Layout} from '@enact/ui/Layout';
@@ -94,7 +95,10 @@ const SingleField = kind({
 					<BodyText className={commonCss.labelField}>{propName}</BodyText>
 				</Cell>
 				<Cell size="65%" className={componentCss.singleField}>
-					<ColorPicker {...rest} color={color} onChange={onChangeInput} />
+					{platform.webos ?
+						<ColorPicker {...rest} color={color} onChange={onChangeInput} /> :
+						<input {...rest} className={commonCss.colorBlock} onChange={onChangeInput} style={{backgroundColor: color}} type="color" value={color} />
+					}
 					<InputField {...rest} className={css.singleInput} css={css} onChange={onChangeInputField} value={color} />
 				</Cell>
 			</Layout>
