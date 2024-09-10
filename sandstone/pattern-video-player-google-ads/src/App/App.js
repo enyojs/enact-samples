@@ -1,3 +1,8 @@
+// App.js
+// A sample Enact application that demonstrates how to integrate Google Video Ads with Sandstone VideoPlayer.
+// This sample is following the IMA SDK tutorial: https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side
+// The sample plays a single inline linear ad like the tutorial, so please adjust the sample if you want to play another ad type.
+
 import {MediaControls} from '@enact/sandstone/MediaPlayer';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
 import VideoPlayer from '@enact/sandstone/VideoPlayer';
@@ -67,6 +72,7 @@ const AppBase = ({className, ...rest}) => {
 			});
 
 			// Ad tag url to request
+			// The sample URL is from https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags
 			adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?' +
 				'iu=/21775744923/external/single_ad_samples&sz=640x480&' +
 				'cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&' +
