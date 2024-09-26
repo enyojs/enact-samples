@@ -2,6 +2,7 @@
 // A sample Enact application that demonstrates how to integrate Google Video Ads with Sandstone VideoPlayer.
 // This sample is following the IMA SDK tutorial: https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side
 // The sample plays a single inline linear ad like the tutorial, so please adjust the sample if you want to play another ad type.
+// Additionally, you can add ads marker on progress bar according to timestamp information of ads.
 
 import {MediaControls} from '@enact/sandstone/MediaPlayer';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
@@ -13,6 +14,7 @@ import videos from './videos.js';
 import css from './App.module.less';
 
 const getVideo = (index) => videos[index];
+const positions = [10, 20, 45];  // Position of markers. Please bring the timestamp info of custom ads
 
 const AppBase = ({className, ...rest}) => {
 	const [adsLoaded, setAdsLoaded] = useState(false);
@@ -135,6 +137,19 @@ const AppBase = ({className, ...rest}) => {
 			adsManager.current?.resize(videoElement.clientWidth, videoElement.clientHeight, window.google.ima.ViewMode.NORMAL);
 		};
 	}, []);
+
+	// Add markers on progress bar
+	if (document.querySelector('[role="progressbar"]')) {
+		positions.forEach(position => {
+			if (position <= videoRef.current.getMediaState().duration) {
+				const left = (position / videoRef.current.getMediaState().duration) * 100 + '%';
+				const marker = document.createElement('div');
+				marker.classList.add(css.marker);
+				marker.style.left = left;
+				document.querySelector('[role="progressbar"]').firstChild.appendChild(marker);
+			}
+		});
+	}
 
 	const {source, ...restVideo} = getVideo(0);
 

@@ -20,6 +20,8 @@ To make the single inline linear ad playable in Enact video player, some details
 If you want to play another ad type, please adjust the sample to that type.
 About the ad types, you can refer to [IMA sample tags](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags).
 
+Additionally, the sample shows how to add ads markers on progress bar. Please bring the timestamp information of custom ads and positon the markers on the time when the ads play.
+
 For a more detailed view, check inside [App.js](src/App/App.js).
 
 ---
