@@ -104,6 +104,7 @@ class EnactComponentNode {
 				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
+			case 'Input':
 			case 'InputField':
 				tagWithProps = `<${this.componentName} placeholder='${placeholder}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
@@ -151,6 +152,7 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace('<ContextualPopupButton', `<ContextualPopupButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
 				return this;
 			case 'DatePicker':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, height: ri.scaleToRem(${componentHeight})}}`);
 			case 'DayPicker':
 			case 'Dropdown':
 			case 'FormCheckboxItem':
@@ -163,6 +165,7 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
 				return this;
 			case 'Header':
+			case 'Input':
 			case 'InputField':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${topLeftPosition}}}`);
 				return this;
@@ -216,6 +219,7 @@ class EnactComponentNode {
 				return this;
 			case 'IconItem':
 			case 'Header':
+			case 'Input':
 			case 'InputField':
 				this.componentNode = `<${this.componentName} />`;
 				return this;
