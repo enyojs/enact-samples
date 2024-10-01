@@ -152,9 +152,9 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace('<ContextualPopupButton', `<ContextualPopupButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
 				return this;
 			case 'DatePicker':
+			case 'DayPicker':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, height: ri.scaleToRem(${componentHeight})}}`);
 				return this;
-			case 'DayPicker':
 			case 'Dropdown':
 			case 'FormCheckboxItem':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
