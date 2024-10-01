@@ -13,6 +13,9 @@
   "networkAccess": {
     "allowedDomains": [
       "none"
+    ],
+    "devAllowedDomains": [
+      "http://localhost:8080"
     ]
   }
 }

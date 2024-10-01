@@ -8,11 +8,20 @@
 </head>
 
 <body style="display: flex; flex-direction: column;">
-<div style="align-self: center;">
-	<button id="write-file-button">Generate</button>
-	<button id="save-dir">Save to directory</button>
+
+<div id="plugin-actions">
+	<div>
+		<button id="write-file-button">Generate</button>
+		<button id="save-dir">Save to directory</button>
+		<button id="open-app">Open Web App</button>
+	</div>
+	<pre id="code" style="padding-top: 20px;"></pre>
 </div>
-<pre id="code" style="padding-top: 20px;"></pre>
+
+<div id="enact-app" style="display: none;">
+	<button id="back">Back</button>
+	<iframe style="width: 950px; height: 550px" src="http://localhost:8080" title="Web App"></iframe>
+</div>
 
 <script>
 
@@ -35,6 +44,20 @@
 		} else {
 			alert("Generate the code first!")
 		}
+	});
+
+	document.getElementById('open-app').addEventListener('click', async () => {
+		const pluginElement = document.getElementById('plugin-actions');
+		const enactApp = document.getElementById('enact-app');
+		pluginElement.style.display = 'none';
+		enactApp.style.display = 'block';
+	});
+
+	document.getElementById('back').addEventListener('click', async () => {
+		const pluginElement = document.getElementById('plugin-actions');
+		const enactApp = document.getElementById('enact-app');
+		pluginElement.style.display = 'block';
+		enactApp.style.display = 'none';
 	});
 
 	window.onmessage = (event) => {

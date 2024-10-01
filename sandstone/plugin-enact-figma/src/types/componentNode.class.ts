@@ -57,8 +57,8 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Checkbox':
-				disabled = this.checkForDisabled((componentProps.parent as InstanceNode).componentProperties);
-				selected = this.checkForSelected((componentProps.parent as InstanceNode).componentProperties);
+				// disabled = this.checkForDisabled((componentProps.parent as InstanceNode).componentProperties);
+				// selected = this.checkForSelected((componentProps.parent as InstanceNode).componentProperties);
 				tagWithProps = `<${this.componentName} disabled={${disabled}} indeterminate={false} indeterminateIcon={'minus'} onToggle={() => {}} selected={${selected}}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
