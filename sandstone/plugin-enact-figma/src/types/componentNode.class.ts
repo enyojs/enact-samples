@@ -153,6 +153,7 @@ class EnactComponentNode {
 				return this;
 			case 'DatePicker':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, height: ri.scaleToRem(${componentHeight})}}`);
+				return this;
 			case 'DayPicker':
 			case 'Dropdown':
 			case 'FormCheckboxItem':
