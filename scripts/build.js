@@ -6,7 +6,11 @@ const process = require('process'),
 
 let error = false;
 
-readdirpPromise('.', {depth: 2, directoryFilter: (di) => di.basename !== 'node_modules', fileFilter: 'package.json'})
+readdirpPromise('.', {
+	depth: 2,
+	directoryFilter: (di) => di.basename !== 'node_modules',
+	fileFilter: (fi) => fi.basename === 'package.json'
+})
 	.then(files => {
 		files.forEach(file => {
 			if (file.path === 'package.json') {
