@@ -1,4 +1,4 @@
-import {ImageItem} from '@enact/sandstone/ImageItem';
+import {ImageItem} from "@enact/sandstone/ImageItem";
 import {Panel, Header} from '@enact/sandstone/Panels';
 import ri from '@enact/ui/resolution';
 import {VirtualGridList} from '@enact/sandstone/VirtualList';
