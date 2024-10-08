@@ -16,7 +16,7 @@
     "extends": "enact-proxy/strict"
   },
   "dependencies": {
-    "readdirp": "^3.6.0",
+    "readdirp": "^4.0.1",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
