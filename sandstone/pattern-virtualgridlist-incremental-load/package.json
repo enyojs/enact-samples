@@ -1,9 +1,9 @@
 {
-	"name": "tutorial-typescript",
+	"name": "pattern-virtualgridlist-incremental-load",
 	"version": "1.0.0",
-	"description": "A simple App to introduce Typescript with Enact",
+	"description": "A general template for an Enact Sandstone application.",
 	"author": "",
-	"main": "src/index.tsx",
+	"main": "src/index.js",
 	"scripts": {
 		"serve": "enact serve",
 		"pack": "enact pack",
@@ -15,7 +15,7 @@
 		"test": "enact test",
 		"test-watch": "enact test --watch"
 	},
-	"license": "apache 2.0",
+	"license": "UNLICENSED",
 	"private": true,
 	"repository": "",
 	"enact": {
@@ -35,14 +35,10 @@
 		"@enact/sandstone": "^2.9.0",
 		"@enact/spotlight": "^4.9.0",
 		"@enact/ui": "^4.9.0",
-		"@types/node": "^22.5.2",
-		"@types/react": "^18.3.5",
-		"@types/react-dom": "^18.3.0",
 		"ilib": "^14.20.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"typescript": "^5.5.4"
+		"react-dom": "^18.3.1"
 	},
 	"devDependencies": {
 		"eslint-config-enact-proxy": "^1.0.8"

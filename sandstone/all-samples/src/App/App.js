@@ -18,6 +18,7 @@ import {AppBase as PatternSinglePanel} from '../../../pattern-single-panel/src/A
 import {appElementBase as PatternSinglePanelRedux} from '../../../pattern-single-panel-redux/src/main';
 import {AppBase as PatternVideoPlayer} from '../../../pattern-video-player/src/App/App';
 import {appElementBase as PatternVirtualgridlistApi} from '../../../pattern-virtualgridlist-api/src/main';
+import {App as PatternVirtualgridlistIncrementalLoad} from '../../../pattern-virtualgridlist-incremental-load/src/App/App';
 import {appElementBase as PatternVirtuallistPreservingFocus} from '../../../pattern-virtuallist-preserving-focus/src/main';
 import {AppBase as TutorialHelloEnact} from '../../../tutorial-hello-enact/src/App/App';
 import {AppBase as TutorialKittenBrowser} from '../../../tutorial-kitten-browser/src/App/App';
@@ -77,6 +78,7 @@ const routes = [
 	{path: '/PatternVideoPlayer', element: <PatternVideoPlayer />},
 	{path: '/PatternVideoPlayerCustom', element: <PatternVideoPlayerCustom />},
 	{path: '/PatternVirtualgridlistApi', element: <PatternVirtualgridlistApi />},
+	{path: '/PatternVirtualgridlistIncrementalLoad', element: <PatternVirtualgridlistIncrementalLoad />},
 	{path: '/PatternVirtuallistPreservingFocus', element: <PatternVirtuallistPreservingFocus />},
 	{path: '/TutorialHelloEnact', element: <TutorialHelloEnact />},
 	{path: '/TutorialKittenBrowser', element: <TutorialKittenBrowser />}
