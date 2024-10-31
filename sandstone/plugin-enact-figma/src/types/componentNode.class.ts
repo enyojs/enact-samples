@@ -44,11 +44,11 @@ class EnactComponentNode {
 
 		switch (this.componentName) {
 			case 'ActionGuide':
-				tagWithProps = `<${this.componentName} buttonAriaLabel={'More'} icon={'arrowsmalldown'}`;
+				tagWithProps = `<${this.componentName} buttonAriaLabel="More" icon="arrowsmalldown"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'BodyText':
-				tagWithProps = `<${this.componentName} centered noWrap size={'large'}`;
+				tagWithProps = `<${this.componentName} centered noWrap size="large"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Button':
@@ -63,15 +63,15 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'CheckboxItem':
-				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`;
+				tagWithProps = `<${this.componentName} inline={false} labelPosition="below"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'ContextualMenuDecorator':
-				tagWithProps = `<ContextualMenuButton direction={'below right'} menuItems={['Option 1']} popupWidth={'auto'}`;
+				tagWithProps = `<ContextualMenuButton direction="below right" menuItems={['Option 1']} popupWidth="auto"`;
 				this.componentNode = this.componentNode.replace('<ContextualMenuButton', tagWithProps);
 				return this;
 			case 'ContextualPopupDecorator':
-				tagWithProps = `<ContextualPopupButton direction={'below right'} onClose={() => {}} onOpen={() => {}} popupComponent={popupComponent}`;
+				tagWithProps = `<ContextualPopupButton direction="below right" onClose={() => {}} onOpen={() => {}} popupComponent={popupComponent}`;
 				this.componentNode = this.componentNode.replace('<ContextualPopupButton', tagWithProps);
 				return this;
 			case 'DatePicker':
@@ -83,21 +83,21 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Dropdown':
-				tagWithProps = `<${this.componentName} direction={'below'} disabled={false} size={'small'}`;
+				tagWithProps = `<${this.componentName} direction="below" disabled={false} size="small"`;
 				return this;
 			// case 'FlexiblePopupPanels':
 			// 	tagWithProps = `<${this.componentName} open={open}`;
 			// 	return this;
 			case 'FormCheckboxItem':
-				tagWithProps = `<${this.componentName} inline={false} labelPosition={'below'}`;
+				tagWithProps = `<${this.componentName} inline={false} labelPosition="below"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Icon':
-				tagWithProps = `<${this.componentName} size={'small'}`;
+				tagWithProps = `<${this.componentName} size="small"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'IconItem':
-				tagWithProps = `<${this.componentName} bordered icon={'info'} label={'${this.childrenComponents[0]}'}`;
+				tagWithProps = `<${this.componentName} bordered icon="info" label={'${this.childrenComponents[0]}'}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Header':
@@ -107,6 +107,10 @@ class EnactComponentNode {
 			case 'Input':
 			case 'InputField':
 				tagWithProps = `<${this.componentName} placeholder='${placeholder}'`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
+				return this;
+			case 'Layout':
+				tagWithProps = `<${this.componentName} align="center"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			default:
@@ -120,7 +124,7 @@ class EnactComponentNode {
 		const tag = `<${this.componentName}`;
 
 		const {
-			// backgroundColor: componentBackgroundColor,
+			backgroundColor: componentBackgroundColor,
 			// color: componentColor, /* To be decided if the color will be used */
 			height: componentHeight,
 			left: leftSize,
@@ -128,10 +132,10 @@ class EnactComponentNode {
 			width: componentWidth
 		} = styles;
 
-		// const backgroundColor = componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
-		// const color = componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : ''; /* To be decided if the color will be used */
+		const backgroundColor = componentBackgroundColor ? `backgroundColor: "rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})"` : '';
+		// const color = componentColor[colorIndex] ? `color: "rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})"` : ''; /* To be decided if the color will be used */
 		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
-		const topLeftPosition = `position: 'absolute', top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
+		const topLeftPosition = `position: "absolute", top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
 		switch (this.componentName) {
 			case 'ActionGuide':
@@ -169,6 +173,12 @@ class EnactComponentNode {
 			case 'Input':
 			case 'InputField':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${topLeftPosition}}}`);
+				return this;
+			case 'Layout':
+			case 'Row':
+			case 'Column':
+			case 'Cell':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${backgroundColor}, ${topLeftPosition}}}`);
 				return this;
 			default:
 				return this;
@@ -218,10 +228,14 @@ class EnactComponentNode {
 				iconName = this.extractIconName(this.childrenComponents[0]);
 				this.componentNode = `<${this.componentName}>${iconName}</${this.componentName}>`;
 				return this;
+			case 'Cell':
+			case 'Column':
 			case 'IconItem':
 			case 'Header':
 			case 'Input':
 			case 'InputField':
+			case 'Layout':
+			case 'Row':
 				this.componentNode = `<${this.componentName} />`;
 				return this;
 			default:

@@ -36,7 +36,7 @@ const generateEnactCode = (components: CustomComponent[]) => {
 	return `${createComponentImport(components)}
 import kind from '@enact/core/kind';
 import {Panel} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
+import {Layout} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 ${addAdditionalContentForContextualDecorator(isContextualMenuDecorator, isContextualPopupDecorator)}
 const MainPanel = kind({
@@ -44,9 +44,9 @@ const MainPanel = kind({
 
     render: (props) => (
         <Panel {...props}>
-        	<Scroller>
+		<Layout>
 		${createComponents(components)}
-		</Scroller>
+		</Layout>
         </Panel>
     )
 });
