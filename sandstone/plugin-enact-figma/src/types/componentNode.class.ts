@@ -230,12 +230,14 @@ class EnactComponentNode {
 				return this;
 			case 'Cell':
 			case 'Column':
+			case 'Layout':
+			case 'Row':
+				this.componentNode = `<${this.componentName}>`;
+				return this;
 			case 'IconItem':
 			case 'Header':
 			case 'Input':
 			case 'InputField':
-			case 'Layout':
-			case 'Row':
 				this.componentNode = `<${this.componentName} />`;
 				return this;
 			default:

@@ -1,4 +1,5 @@
 class CustomComponent {
+	children?: CustomComponent[];
 	componentName: string;
 	componentProps: InstanceNode;
 	childrenProps: [ComponentNode] | [TextNode];
