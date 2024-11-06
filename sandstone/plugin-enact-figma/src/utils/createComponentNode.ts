@@ -1,5 +1,4 @@
-import CustomComponent from '../types/component.class';
-import EnactComponentNode from '../types/componentNode.class';
+import {CustomComponentStyles, CustomComponent, EnactComponentNode, CustomComponentProperties} from "../types";
 
 // Convert Figma RGB color to CSS RGB color
 const convertToRGB = (color: { r: number, g: number, b: number }) => {
@@ -11,55 +10,62 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 };
 
 // Extract component props from Figma design
-const extractComponentProps = (component: CustomComponent) => {
+const extractChildComponents = (component: CustomComponent) => {
 	const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
 
-	// eslint-disable-next-line no-undefined
-	const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
-	const childrenColors = component.childrenProps.map(childrenProps => {
-		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
-			return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
-		}
-
-		if (childrenProps.fills.length > 0) {
-			return convertToRGB(childrenProps.fills[0].color);
-		}
-
-		// eslint-disable-next-line no-undefined
-		return undefined;
-	});
-	const childrenComponents = component.childrenProps.map((childrenProps, index) => {
+	// // eslint-disable-next-line no-undefined
+	// const componentColors = component.componentProps.fills[0] !== undefined ? convertToRGB(component.componentProps.fills[0].color) : undefined;
+	// const childrenColors = component.childrenProps.map(childrenProps => {
+	// 	if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
+	// 		return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
+	// 	}
+	//
+	// 	if (childrenProps.fills.length > 0) {
+	// 		return convertToRGB(childrenProps.fills[0].color);
+	// 	}
+	//
+	// 	// eslint-disable-next-line no-undefined
+	// 	return undefined;
+	// });
+	return component.childrenProps.map((children, index: number) => {
 		if (componentsNames.includes(component.componentName) && index === 1) {
-			return childrenProps.children[0].children[0].characters ?? childrenProps;
+			return children.children[0].children[0].characters ?? children;
 		}
 
-		return childrenProps.characters ?? childrenProps;
+		return children.characters ?? children;
 	});
-
-	return {componentColors, childrenColors, childrenComponents};
 };
+
+const extractComponentStyles = (component: CustomComponent): CustomComponentStyles => {
+	const backgroundColor = '';
+	const color = '';
+	const height = component.componentProps.height;
+	const left = component.x
+	const top = component.y;
+	const width = component.componentProps.width;
+
+	return {backgroundColor, color, height, left, top, width};
+}
+
+const extractComponentProps = (component: CustomComponent, childrenComponents): CustomComponentProperties => {
+	const disabled = component.componentProps.componentProperties.State.value === 'deactivated';
+	const placeholder = childrenComponents[0] ?? '';
+	const selected = component.componentProps.componentProperties.Type?.value === 'selected';
+	const size = component.componentProps.componentProperties.Size?.value;
+	const subtitle = childrenComponents[1] ?? '';
+	const title = childrenComponents[0] ?? '';
+
+	return {disabled, placeholder, selected, size, subtitle, title};
+}
 
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {
-	const {componentColors, childrenColors, childrenComponents} = extractComponentProps(component);
-	const {componentProps} = component;
+	const childComponents = extractChildComponents(component);
+	const componentStyles = extractComponentStyles(component);
+	const componentProps = extractComponentProps(component, childComponents);
 
-	const {componentName, x, y} = component;
-	const {height, width} = component.componentProps;
-
-	const componentStyles = {
-		backgroundColor: componentColors,
-		color: childrenColors,
-		top: y,
-		left: x,
-		height: height,
-		width: width
-	};
-
-	const componentNode = new EnactComponentNode(childrenComponents, componentName);
-	componentNode.createComponent()
-		.addComponentStyle(componentStyles)
-		.addComponentProps(componentProps);
+	const componentNode = new EnactComponentNode(component.componentName);
+	componentNode.createComponent(childComponents).addComponentStyle(componentStyles).addComponentProps(componentProps);
 
 	const generatedNode = componentNode.generatedComponentNode;
 	return generatedNode ? generatedNode.replace(/(\r\n|\n|\r|\t)/gm, "") : '';

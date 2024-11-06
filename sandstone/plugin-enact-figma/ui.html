@@ -2,37 +2,233 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Generate</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		body {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
+
+		button, #resolutions, option {
+			background-color: #7d848c;
+			border-radius: 5px;
+			border: none;
+			color: white;
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			padding: 10px;
+		}
+
+		button:hover, #resolutions:hover {
+			background-color: rgba(125, 132, 140, 0.5);
+		}
+
+		select {
+			margin-right: 10px;
+		}
+
+		label {
+			color: white;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		#back, #rotate {
+			margin-bottom: 20px;
+			width: 100px;
+		}
+
+		#enact-app {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+
+			iframe {
+				border-radius: 10px;
+				border: none;
+				min-height: 576px;
+				min-width: 1024px;
+				zoom: 96%;
+			}
+		}
+
+		#enact-app-controls {
+			align-self: center;
+			display: flex;
+			justify-content: space-between;
+			width: 95%;
+		}
+
+		#plugin-actions {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+		}
+
+		#resolutions {
+			text-align: center;
+		}
+	</style>
 </head>
 
-<body style="display: flex; flex-direction: column;">
+<body>
 
 <div id="plugin-actions">
-	<div>
-		<button id="write-file-button">Generate</button>
-		<button id="save-dir">Save to directory</button>
-		<button id="open-app">Open Web App</button>
-	</div>
-	<pre id="code" style="padding-top: 20px;"></pre>
+	<button id="generate-code-button">
+		Generate Code
+		<i style="display: none" id="generate-icon" class="fa fa-check"></i>
+	</button>
+	<button id="copy-code-button" onclick="copyGeneratedCode()">
+		Copy Code
+		<i style="display: none" id="copy-icon" class="fa fa-check"></i>
+	</button>
+	<button id="save-dir">Save to directory</button>
+	<button id="open-app">Open Web App</button>
 </div>
 
-<div id="enact-app" style="display: none;">
-	<button id="back">Back</button>
-	<iframe style="width: 950px; height: 550px" src="http://localhost:8080" title="Web App"></iframe>
+<pre id="generated-code">
+	<code id="code"></code>
+</pre>
+
+<div id="enact-app" style="display: none">
+	<div id="enact-app-controls">
+		<button id="back">
+			<i class="fa fa-arrow-left"></i>
+			Back
+		</button>
+		<div>
+			<label for="resolutions">Aspect Ratio:</label>
+			<select onchange="setAspectRatio()" name="resolutions" id="resolutions">
+				<option value='{"width":1024, "height":576}'>PAL (1024x576)</option>
+				<option value='{"width":1280, "height":720}'>HD (1280x720)</option>
+				<option value='{"width":1920, "height":1080}'>FHD (1920x1080)</option>
+				<option value='{"width":2560, "height":1080}'>UW-UXGA (2560x1080)</option>
+				<option value='{"width":2560, "height":1440}'>QHD (2560x1440)</option>
+				<option value='{"width":3840, "height":2160}'>UHD (3840x2160)</option>
+				<option value='{"width":7680, "height":4320}'>UHD2 (7680x4320)</option>
+			</select>
+			<button id="rotate" onclick="rotateWebApp()">
+				Rotate
+				<i class="fa fa-rotate-left"></i>
+			</button>
+		</div>
+	</div>
+	<div>
+		<iframe id="web-app-iframe" src="http://localhost:8080" title="Web App"></iframe>
+	</div>
 </div>
 
 <script>
+	let rotated = false;
+	const code = document.getElementById('code');
+	const enactApp = document.getElementById('enact-app');
+	const generatedCode = document.getElementById('generated-code');
+	const iframe = document.getElementById('web-app-iframe');
+	const pluginElement = document.getElementById('plugin-actions');
+	const selectElement = document.getElementById('resolutions');
 
-	document.getElementById('write-file-button').addEventListener('click', () => {
-		parent.postMessage({ pluginMessage: { type: 'create' } }, '*');
+	function copyGeneratedCode() {
+		if (code.innerText === '') {
+			alert('Please generated the code first :)');
+			return;
+		}
+
+		const textArea = document.createElement('textarea');
+		textArea.value = code.innerText;
+		document.body.appendChild(textArea);
+
+		textArea.focus();
+		textArea.select();
+
+		try {
+			document.execCommand('copy');
+			const copyButton = document.getElementById('copy-code-button');
+			const copyIcon = document.getElementById('copy-icon');
+			copyButton.style.backgroundColor = 'green';
+			copyIcon.style.display = '';
+			setTimeout(() => {
+				copyButton.style.backgroundColor = '';
+				copyIcon.style.display = 'none';
+			}, 1000);
+		} catch (e) {
+			alert('Cannot copy the generated code :(');
+			document.body.removeChild(textArea);
+			window.scrollTo(0, 0);
+		}
+
+		document.body.removeChild(textArea);
+		window.scrollTo(0, 0);
+	}
+
+	function setAspectRatio() {
+		rotated = false;
+		const {width, height} = JSON.parse(selectElement.value);
+		const selectedIndex = selectElement.selectedIndex;
+
+		if (!document.startViewTransition) {
+			iframe.style.width = width + 'px';
+			iframe.style.height = height + 'px';
+			iframe.style.zoom = setWebAppZoom(selectedIndex);
+			return;
+		}
+
+		document.startViewTransition(() => {
+			iframe.style.width = width + 'px';
+			iframe.style.height = height + 'px';
+			iframe.style.zoom = setWebAppZoom(selectedIndex);
+		});
+	}
+
+	function setWebAppZoom(selectedIndex) {
+		switch (selectedIndex) {
+			case 0:
+				return '96%';
+			case 1:
+				return '77%';
+			case 2:
+				return '52%';
+			case 3:
+				return '40%';
+			case 4:
+				return '39%';
+			case 5:
+				return '26.3%';
+			case 6:
+				return '13%';
+			default:
+				return '96%';
+		}
+	}
+
+	function rotateWebApp() {
+		rotated = !rotated;
+		const {width, height} = JSON.parse(selectElement.value);
+
+		if (!document.startViewTransition) {
+			iframe.style.width = rotated ? height : width + 'px';
+			iframe.style.height = rotated ? width : height + 'px';
+			return;
+		}
+
+		document.startViewTransition(() => {
+			iframe.style.width = rotated ? height : width + 'px';
+			iframe.style.height = rotated ? width : height + 'px';
+		});
+	}
+
+	document.getElementById('generate-code-button').addEventListener('click', () => {
+		parent.postMessage({pluginMessage: {type: 'create'}}, '*');
 	});
 
 	document.getElementById('save-dir').addEventListener('click', async () => {
-		const data = document.getElementById("code").innerText
+		const data = code.innerText;
 		if (!!data) {
-			const blob = new Blob([data], { type: 'text/javascript' });
+			const blob = new Blob([data], {type: 'text/javascript'});
 			const url = URL.createObjectURL(blob);
 			const a = document.createElement('a');
 			a.href = url;
@@ -42,21 +238,19 @@
 			document.body.removeChild(a);
 			URL.revokeObjectURL(url);
 		} else {
-			alert("Generate the code first!")
+			alert('Generate the code first!');
 		}
 	});
 
 	document.getElementById('open-app').addEventListener('click', async () => {
-		const pluginElement = document.getElementById('plugin-actions');
-		const enactApp = document.getElementById('enact-app');
+		generatedCode.style.display = 'none';
 		pluginElement.style.display = 'none';
-		enactApp.style.display = 'block';
+		enactApp.style.display = '';
 	});
 
 	document.getElementById('back').addEventListener('click', async () => {
-		const pluginElement = document.getElementById('plugin-actions');
-		const enactApp = document.getElementById('enact-app');
-		pluginElement.style.display = 'block';
+		generatedCode.style.display = '';
+		pluginElement.style.display = '';
 		enactApp.style.display = 'none';
 	});
 
@@ -64,11 +258,23 @@
 		const msg = event.data.pluginMessage;
 
 		if (msg.type === 'show-code') {
-			const div = document.getElementById("code");
-			div.innerText = msg.data;
+			code.classList.add('hljs');
+			code.innerHTML = hljs.highlightAuto(msg.data).value;
+
+			const generateButton = document.getElementById('generate-code-button');
+			const generateIcon = document.getElementById('generate-icon');
+			generateButton.style.backgroundColor = 'green';
+			generateIcon.style.display = '';
+			setTimeout(() => {
+				generateButton.style.backgroundColor = '';
+				generateIcon.style.display = 'none';
+			}, 1000);
 		}
-	}
+	};
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
 </body>
 
 </html>
