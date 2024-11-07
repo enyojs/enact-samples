@@ -1,11 +1,14 @@
 class CustomComponentStyles {
 	backgroundColor?: string;
+	borderRadius?: string;
 	color?: string;
-	fontSize?: number;
-	height?: number;
-	left?: number;
-	top?: number;
-	width?: number;
+	fontSize?: string;
+	height?: string;
+	left?: string;
+	opacity?: string;
+	padding?: string;
+	top?: string;
+	width?: string;
 }
 
 export default CustomComponentStyles;

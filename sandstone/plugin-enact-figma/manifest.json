@@ -12,7 +12,7 @@
   "ui": "ui.html",
   "networkAccess": {
     "allowedDomains": [
-      "none"
+      "https://cdnjs.cloudflare.com"
     ],
     "devAllowedDomains": [
       "http://localhost:8080"

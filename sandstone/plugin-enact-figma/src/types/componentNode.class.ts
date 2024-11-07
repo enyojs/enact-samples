@@ -13,6 +13,23 @@ class EnactComponentNode {
 		return this.componentNode;
 	}
 
+	private convertStylesToString (styles: CustomComponentStyles) {
+		return Object.entries(styles)
+			.filter(([, value]) => value)
+			.map(([key, value]) => {
+				if (this.componentName === 'Button' && key === 'backgroundColor') {
+					return `'--sand-component-bg-color': '${value}'`;
+				} else 	if (value.includes('rgb')) {
+					return `${key}: '${value}'`;
+				} else if (key.includes('padding')) {
+					return `${value}`;
+				} else {
+					return `${key}: ${value}`;
+				}
+			})
+			.join(', ');
+	}
+
 	private extractIconName (componentProperties): string {
 		// Names must match the Icon names defined in Sandstone library
 		if (componentProperties.name.includes('ic_')) {
@@ -86,7 +103,7 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'IconItem':
-				tagWithProps = `<${this.componentName} bordered icon={'info'} label={'${props.label}'}`;
+				tagWithProps = `<${this.componentName} bordered icon="info" label={'${props.label}'}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Header':
@@ -133,7 +150,7 @@ class EnactComponentNode {
 				return this;
 			case 'BodyText':
 			case 'Button':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Cell':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${backgroundColor}, ${topLeftPosition}}}`);
