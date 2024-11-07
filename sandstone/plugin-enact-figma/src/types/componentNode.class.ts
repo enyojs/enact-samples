@@ -17,9 +17,15 @@ class EnactComponentNode {
 		return Object.entries(styles)
 			.filter(([, value]) => value)
 			.map(([key, value]) => {
+				// Exclude 'top' and 'left' if the component is a Button
+				// in the demo we have Buttons inside Layout components, and they need to be aligned automatically, not forced with 'top' and 'left'
+				// also excluded 'color' for now, so that Spotlight works and color is not enforced
+				if (this.componentName === 'Button' && (key === 'top' || key === 'left' || key === 'color')) {
+					return null;
+				}
 				if (this.componentName === 'Button' && key === 'backgroundColor') {
 					return `'--sand-component-bg-color': '${value}'`;
-				} else 	if (value.includes('rgb')) {
+				} else if (value.includes('rgb')) {
 					return `${key}: '${value}'`;
 				} else if (key.includes('padding')) {
 					return `${value}`;
@@ -27,6 +33,7 @@ class EnactComponentNode {
 					return `${key}: ${value}`;
 				}
 			})
+			.filter(Boolean) // Remove any nulls from the map
 			.join(', ');
 	}
 
@@ -126,23 +133,8 @@ class EnactComponentNode {
 
 	// Add styling to the created component node
 	addComponentStyle (styles: CustomComponentStyles) {
-		// const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0; /* To be decided if the color will be used */
 		const tag = `<${this.componentName}`;
-
-		const {
-			backgroundColor: componentBackgroundColor,
-			// color: componentColor, /* To be decided if the color will be used */
-			height: componentHeight,
-			left: leftSize,
-			top: topSize,
-			width: componentWidth
-		} = styles;
-
-		const backgroundColor = componentBackgroundColor ? `backgroundColor: "${componentBackgroundColor}"` : '';
-		// const color = componentColor[colorIndex] ? `color: "rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})"` : ''; /* To be decided if the color will be used */
-		const height = `height: ri.scaleToRem(${componentHeight})`;
-		const width = `width: ri.scaleToRem(${componentWidth})`;
-		const topLeftPosition = `position: "absolute", top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
+		const topLeftPosition = `position: "absolute"`;
 
 		switch (this.componentName) {
 			case 'ActionGuide':
@@ -153,13 +145,13 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Cell':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${backgroundColor}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Checkbox':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
 				return this;
 			case 'CheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'ContextualMenuDecorator':
 				this.componentNode = this.componentNode.replace('<ContextualMenuButton', `<ContextualMenuButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
@@ -169,27 +161,27 @@ class EnactComponentNode {
 				return this;
 			case 'DatePicker':
 			case 'DayPicker':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, height: ri.scaleToRem(${componentHeight})}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)})}}`);
 				return this;
 			case 'Dropdown':
 			case 'FormCheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Icon':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'IconItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Header':
 			case 'Input':
 			case 'InputField':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
 				return this;
 			case 'Layout':
 			case 'Row':
 			case 'Column':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${backgroundColor}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${this.convertStylesToString(styles)}}}`);
 				return this;
 			default:
 				return this;

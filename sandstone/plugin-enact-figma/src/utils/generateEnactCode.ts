@@ -37,10 +37,12 @@ const createComponents = (components: CustomComponent[]) => {
 };
 
 const addAdditionalContentForContextualDecorator = (menuDecorator: boolean, popupDecorator: boolean) => {
-	let content = [];
+	const content = [];
+
 	if (menuDecorator) {
 		content.push('const ContextualMenuButton = ContextualMenuDecorator(Button); // Instead of button it can be any other component');
 	}
+
 	if (popupDecorator) {
 		content.push('const ContextualPopupButton = ContextualPopupDecorator(Button); // Instead of button it can be any other component');
 		content.push('const popupComponent = () => <div>Hello Contextual Popup</div>;');

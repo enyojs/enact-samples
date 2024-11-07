@@ -2,7 +2,7 @@ class CustomComponent {
 	children?: CustomComponent[];
 	componentName: string;
 	componentProps: InstanceNode;
-	children: [ComponentNode] | [TextNode];
+	childrenProps: [ComponentNode] | [TextNode];
 	x: number;
 	y: number;
 }
