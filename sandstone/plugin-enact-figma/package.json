@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "lint": "enact lint --strict .",
+    "run-enact-app": "npm run --prefix enact-figma-app serve",
     "watch": "npm run build -- --watch",
     "watch-dev": "npm run build -- --watch"
   },
