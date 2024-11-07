@@ -132,7 +132,7 @@ class EnactComponentNode {
 
 		// const backgroundColor = componentBackgroundColor ? `backgroundColor: 'rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})'` : '';
 		// const color = componentColor[colorIndex] ? `color: 'rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})'` : ''; /* To be decided if the color will be used */
-		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight}), fontSize: ri.scaleToRem(60)`;
+		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
 		const topLeftPosition = `position: 'absolute', top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
 		switch (this.componentName) {

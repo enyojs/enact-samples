@@ -1,4 +1,4 @@
-import {CustomComponentStyles, CustomComponent, EnactComponentNode, CustomComponentProperties} from "../types";
+import {CustomComponent, CustomComponentProperties, CustomComponentStyles, EnactComponentNode} from "../types";
 
 const componentsNames = ['CheckboxItem', 'FormCheckboxItem']; // Components names for conditional properties extraction
 
