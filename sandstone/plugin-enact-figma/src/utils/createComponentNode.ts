@@ -34,7 +34,7 @@ const getComponentColor = (component: CustomComponent): string => {
 
 		return '';
 	})[0];
-}
+};
 
 const getComponentPadding = (componentProps: InstanceNode): string => {
 	const {paddingBottom = 0, paddingLeft = 0, paddingRight = 0, paddingTop = 0} = componentProps;
@@ -43,15 +43,15 @@ const getComponentPadding = (componentProps: InstanceNode): string => {
 		.filter(([, value]) => value)
 		.map(([key, value]) => `${key}: ri.scaleToRem(${value})`)
 		.join(", ");
-}
+};
 
 const extractComponentStyles = (component: CustomComponent): CustomComponentStyles => {
 	const componentFontSize = (component.componentProps.children.find(value => (value as TextNode).fontSize) as TextNode).fontSize;
 
-	const backgroundColor = component.componentProps.fills[0] !== undefined && convertToRGB(component.componentProps.fills[0].color);
+	const backgroundColor = component.componentProps.fills[0] && convertToRGB(component.componentProps.fills[0].color);
 	const borderRadius = String(component.componentProps.cornerRadius);
 	const color = getComponentColor(component);
-	const fontSize = componentFontSize && `ri.scaleToRem(${Number(componentFontSize)})`
+	const fontSize = componentFontSize && `ri.scaleToRem(${Number(componentFontSize)})`;
 	const height = component.componentProps.height && `ri.scaleToRem(${component.componentProps.height})`;
 	const left = component.x && `ri.scaleToRem(${component.x})`;
 	const opacity = String(component.componentProps.opacity);
@@ -60,7 +60,7 @@ const extractComponentStyles = (component: CustomComponent): CustomComponentStyl
 	const width = component.componentProps.width && `ri.scaleToRem(${component.componentProps.width})`;
 
 	return {backgroundColor, borderRadius, color, fontSize, height, left, opacity, padding, top, width};
-}
+};
 
 const extractComponentProps = (component: CustomComponent, childrenComponents): CustomComponentProperties => {
 	const disabled = component.componentProps.componentProperties.State.value === 'deactivated';
@@ -71,7 +71,7 @@ const extractComponentProps = (component: CustomComponent, childrenComponents): 
 	const title = childrenComponents[0] ?? '';
 
 	return {disabled, placeholder, selected, size, subtitle, title};
-}
+};
 
 // Create Enact component from Figma component
 const createComponentNode = (component: CustomComponent) => {

@@ -5,32 +5,32 @@ class EnactComponentNode {
 	private readonly componentName: string;
 	private componentNode: string;
 
-	constructor(componentName: string) {
+	constructor (componentName: string) {
 		this.componentName = componentName;
 	}
 
-	get generatedComponentNode() {
+	get generatedComponentNode () {
 		return this.componentNode;
 	}
 
-	private convertStylesToString(styles: CustomComponentStyles) {
+	private convertStylesToString (styles: CustomComponentStyles) {
 		return Object.entries(styles)
 			.filter(([, value]) => value)
 			.map(([key, value]) => {
 				if (this.componentName === 'Button' && key === 'backgroundColor') {
-					return `'--sand-component-bg-color': '${value}'`
+					return `'--sand-component-bg-color': '${value}'`;
 				} else 	if (value.includes('rgb')) {
-					return `${key}: '${value}'`
+					return `${key}: '${value}'`;
 				} else if (key.includes('padding')) {
-					return `${value}`
+					return `${value}`;
 				} else {
-					return `${key}: ${value}`
+					return `${key}: ${value}`;
 				}
 			})
 			.join(', ');
 	}
 
-	private extractIconName(componentProperties): string {
+	private extractIconName (componentProperties): string {
 		// Names must match the Icon names defined in Sandstone library
 		if (componentProperties.name.includes('ic_')) {
 			const iconName = componentProperties.name.split('_').slice(1, -1).toString().replace(/,/g, '');
@@ -41,9 +41,7 @@ class EnactComponentNode {
 	}
 
 	// Add props to the component node
-	addComponentProps(props: CustomComponentProperties) {
-		let selected = false;
-
+	addComponentProps (props: CustomComponentProperties) {
 		const tag = `<${this.componentName}`;
 		let tagWithProps = '';
 
@@ -119,7 +117,7 @@ class EnactComponentNode {
 	}
 
 	// Add styling to the created component node
-	addComponentStyle(styles: CustomComponentStyles) {
+	addComponentStyle (styles: CustomComponentStyles) {
 		// const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0; /* To be decided if the color will be used */
 		const tag = `<${this.componentName}`;
 
@@ -182,7 +180,7 @@ class EnactComponentNode {
 	}
 
 	// Create component node
-	public createComponent(childComponents: string[]) {
+	public createComponent (childComponents: string[]) {
 		let iconName = '';
 
 		switch (this.componentName) {
