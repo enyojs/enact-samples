@@ -1,23 +1,16 @@
+import CustomComponentStyles from "./componentStyles.class";
+import CustomComponentProperties from "./componentProperties.class";
+
 class EnactComponentNode {
-	private childrenComponents: object;
-	private componentName: string;
+	private readonly componentName: string;
 	private componentNode: string;
 
-	constructor (childrenComponents: object, componentName: string) {
-		this.childrenComponents = childrenComponents;
+	constructor (componentName: string) {
 		this.componentName = componentName;
 	}
 
 	get generatedComponentNode () {
 		return this.componentNode;
-	}
-
-	private checkForDisabled (componentProperties): boolean {
-		return componentProperties.State.value.includes('deactivated');
-	}
-
-	private checkForSelected (componentProperties): boolean {
-		return componentProperties.Type.value === 'selected';
 	}
 
 	private extractIconName (componentProperties): string {
@@ -31,14 +24,7 @@ class EnactComponentNode {
 	}
 
 	// Add props to the component node
-	addComponentProps (componentProps: InstanceNode) {
-		const placeholder = this.childrenComponents[0] ?? "";
-		const subtitle = this.childrenComponents[1] ?? "";
-		const title = this.childrenComponents[0] ?? "";
-
-		let disabled = false;
-		let selected = false;
-
+	addComponentProps (props: CustomComponentProperties) {
 		const tag = `<${this.componentName}`;
 		let tagWithProps = '';
 
@@ -52,14 +38,17 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Button':
-				disabled = this.checkForDisabled(componentProps.componentProperties);
-				tagWithProps = `<${this.componentName} disabled={${disabled}}`;
+				tagWithProps = `<${this.componentName} disabled={${props.disabled}} size={'${props.size}'}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
+				return this;
+			case 'Cell':
+				tagWithProps = `<${this.componentName} align={'${props.align}'}${props.shrink ? ' shrink' : ''}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Checkbox':
 				// disabled = this.checkForDisabled((componentProps.parent as InstanceNode).componentProperties);
 				// selected = this.checkForSelected((componentProps.parent as InstanceNode).componentProperties);
-				tagWithProps = `<${this.componentName} disabled={${disabled}} indeterminate={false} indeterminateIcon={'minus'} onToggle={() => {}} selected={${selected}}`;
+				tagWithProps = `<${this.componentName} disabled={${props.disabled}} indeterminate={false} indeterminateIcon="minus" onToggle={() => {}} selected={${props.selected}}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'CheckboxItem':
@@ -97,20 +86,20 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'IconItem':
-				tagWithProps = `<${this.componentName} bordered icon="info" label={'${this.childrenComponents[0]}'}`;
+				tagWithProps = `<${this.componentName} bordered icon={'info'} label={'${props.label}'}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Header':
-				tagWithProps = `<${this.componentName} subtitle='${subtitle}' title='${title}'`;
+				tagWithProps = `<${this.componentName} subtitle='${props.subtitle}' title='${props.title}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Input':
 			case 'InputField':
-				tagWithProps = `<${this.componentName} placeholder='${placeholder}'`;
+				tagWithProps = `<${this.componentName} placeholder='${props.placeholder}'`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Layout':
-				tagWithProps = `<${this.componentName} align="center"`;
+				tagWithProps = `<${this.componentName}"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			default:
@@ -119,7 +108,7 @@ class EnactComponentNode {
 	}
 
 	// Add styling to the created component node
-	addComponentStyle (styles) {
+	addComponentStyle (styles: CustomComponentStyles) {
 		// const colorIndex = this.componentName === 'ActionGuide' || this.componentName === 'CheckboxItem' ? 1 : 0; /* To be decided if the color will be used */
 		const tag = `<${this.componentName}`;
 
@@ -132,9 +121,10 @@ class EnactComponentNode {
 			width: componentWidth
 		} = styles;
 
-		const backgroundColor = componentBackgroundColor ? `backgroundColor: "rgb(${componentBackgroundColor.red}, ${componentBackgroundColor.green}, ${componentBackgroundColor.blue})"` : '';
+		const backgroundColor = componentBackgroundColor ? `backgroundColor: "${componentBackgroundColor}"` : '';
 		// const color = componentColor[colorIndex] ? `color: "rgb(${componentColor[colorIndex].red}, ${componentColor[colorIndex].green}, ${componentColor[colorIndex].blue})"` : ''; /* To be decided if the color will be used */
-		const size = `width: ri.scaleToRem(${componentWidth}), height: ri.scaleToRem(${componentHeight})`;
+		const height = `height: ri.scaleToRem(${componentHeight})`;
+		const width = `width: ri.scaleToRem(${componentWidth})`;
 		const topLeftPosition = `position: "absolute", top: ri.scaleToRem(${topSize}), left: ri.scaleToRem(${leftSize})`;
 
 		switch (this.componentName) {
@@ -143,11 +133,16 @@ class EnactComponentNode {
 				return this;
 			case 'BodyText':
 			case 'Button':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}}}`);
+				return this;
+			case 'Cell':
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${backgroundColor}, ${topLeftPosition}}}`);
+				return this;
 			case 'Checkbox':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
 				return this;
 			case 'CheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
 				return this;
 			case 'ContextualMenuDecorator':
 				this.componentNode = this.componentNode.replace('<ContextualMenuButton', `<ContextualMenuButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
@@ -161,24 +156,23 @@ class EnactComponentNode {
 				return this;
 			case 'Dropdown':
 			case 'FormCheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
 				return this;
 			case 'Icon':
 				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
 				return this;
 			case 'IconItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${size}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${height}, ${width}}}`);
 				return this;
 			case 'Header':
 			case 'Input':
 			case 'InputField':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${topLeftPosition}}}`);
 				return this;
 			case 'Layout':
 			case 'Row':
 			case 'Column':
-			case 'Cell':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${size}, ${backgroundColor}, ${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${height}, ${width}, ${backgroundColor}, ${topLeftPosition}}}`);
 				return this;
 			default:
 				return this;
@@ -186,30 +180,30 @@ class EnactComponentNode {
 	}
 
 	// Create component node
-	public createComponent () {
+	public createComponent (childComponents: string[]) {
 		let iconName = '';
 
 		switch (this.componentName) {
 			case 'ActionGuide':
-				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
+				this.componentNode = `<${this.componentName}>${childComponents[1]}</${this.componentName}>`;
 				return this;
 			case 'BodyText':
-				this.componentNode = this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
+				this.componentNode = childComponents ? `<${this.componentName}>${childComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
 				return this;
 			case 'Button':
-				this.componentNode = this.childrenComponents ? `<${this.componentName}>${this.childrenComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
+				this.componentNode = childComponents ? `<${this.componentName}>${childComponents[0]}</${this.componentName}>` : `<${this.componentName} />`;
 				return this;
 			case 'Checkbox':
 				this.componentNode = `<${this.componentName}>{/*Icon Name*/}</${this.componentName}>`;
 				return this;
 			case 'CheckboxItem':
-				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
+				this.componentNode = `<${this.componentName}>${childComponents[1]}</${this.componentName}>`;
 				return this;
 			case 'ContextualMenuDecorator':
-				this.componentNode = `<ContextualMenuButton>${this.childrenComponents[0]}</ContextualMenuButton>`;
+				this.componentNode = `<ContextualMenuButton>${childComponents[0]}</ContextualMenuButton>`;
 				return this;
 			case 'ContextualPopupDecorator':
-				this.componentNode = `<ContextualPopupButton>${this.childrenComponents[0]}</ContextualPopupButton>`;
+				this.componentNode = `<ContextualPopupButton>${childComponents[0]}</ContextualPopupButton>`;
 				return this;
 			case 'DatePicker':
 			case 'DayPicker':
@@ -222,10 +216,10 @@ class EnactComponentNode {
 			// 	this.componentNode = `<div><${this.componentName}><Panel size={'auto'}>Content 1</Panel><Panel size={'auto'}>Content 2</Panel></${this.componentName}><Button>${this.childrenComponents[0]}</Button></div>`;
 			// 	return this;
 			case 'FormCheckboxItem':
-				this.componentNode = `<${this.componentName}>${this.childrenComponents[1]}</${this.componentName}>`;
+				this.componentNode = `<${this.componentName}>${childComponents[1]}</${this.componentName}>`;
 				return this;
 			case 'Icon':
-				iconName = this.extractIconName(this.childrenComponents[0]);
+				iconName = this.extractIconName(childComponents[0]);
 				this.componentNode = `<${this.componentName}>${iconName}</${this.componentName}>`;
 				return this;
 			case 'Cell':
