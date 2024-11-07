@@ -10,6 +10,7 @@
 	<style>
 		body {
 			background-color: rgba(0, 0, 0, 0.8);
+			overflow: hidden;
 		}
 
 		button, #resolutions, option {
@@ -25,6 +26,11 @@
 
 		button:hover, #resolutions:hover {
 			background-color: rgba(125, 132, 140, 0.5);
+		}
+
+		code {
+			border-radius: 10px;
+			height: 85%;
 		}
 
 		select {
@@ -109,7 +115,7 @@
 				<option value='{"width":1920, "height":1080}'>FHD (1920x1080)</option>
 				<option value='{"width":2560, "height":1080}'>UW-UXGA (2560x1080)</option>
 				<option value='{"width":2560, "height":1440}'>QHD (2560x1440)</option>
-				<option value='{"width":3840, "height":2160}'>UHD (3840x2160)</option>
+				<option selected value='{"width":3840, "height":2160}'>UHD (3840x2160)</option>
 				<option value='{"width":7680, "height":4320}'>UHD2 (7680x4320)</option>
 			</select>
 			<button id="rotate" onclick="rotateWebApp()">
@@ -131,6 +137,8 @@
 	const iframe = document.getElementById('web-app-iframe');
 	const pluginElement = document.getElementById('plugin-actions');
 	const selectElement = document.getElementById('resolutions');
+
+	code.classList.add('hljs');
 
 	function copyGeneratedCode() {
 		if (code.innerText === '') {
