@@ -12,7 +12,7 @@ const createComponents = (components: CustomComponent[]) => {
 
 				const parentsArray = createComponentNode(component);
 				childrenArray.unshift(parentsArray);
-				childrenArray.push(`</${component.componentName}>`)
+				childrenArray.push(`</${component.componentName}>`);
 
 				return childrenArray;
 			} else {
@@ -56,7 +56,7 @@ const generateEnactCode = (components: CustomComponent[]) => {
 	const isContextualPopupDecorator = !!components.find(component => component.componentName === 'ContextualPopupDecorator');
 
 	// Helper function to check if two components overlap
-	function isOverlapping(parent, child) {
+	function isOverlapping (parent, child) {
 		return (
 			child.x >= parent.x &&
 			child.y >= parent.y &&
@@ -66,10 +66,10 @@ const generateEnactCode = (components: CustomComponent[]) => {
 	}
 
 	// Recursive function to build the nested structure
-	function nestComponents(components) {
+	function nestComponents (componentTags) {
 		const result = [];
 
-		components.forEach((component) => {
+		componentTags.forEach((component) => {
 			// Find potential parents by checking overlap
 			const parent = components.find(
 				(potentialParent) =>
