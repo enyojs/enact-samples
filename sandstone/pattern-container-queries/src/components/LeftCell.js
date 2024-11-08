@@ -13,7 +13,7 @@ const StyledLayout = styled(Layout)(({theme}) => ({
 			color: 'orange',
 			fontSize: '24px'
 		}
-	},
+	}
 }));
 
 const LeftCell = () => {

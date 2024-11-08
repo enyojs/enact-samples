@@ -23,8 +23,8 @@ const StyledLayout = styled(Layout)`
 `;
 
 const CustomImage = () => {
-	return <Image className={css.customImage} src={svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300')} />
-}
+	return <Image className={css.customImage} src={svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300')} />;
+};
 
 const RightCell = () => {
 	return (
