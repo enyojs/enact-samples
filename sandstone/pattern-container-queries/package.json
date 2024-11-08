@@ -1,0 +1,49 @@
+{
+  "name": "pattern-container-queries",
+  "version": "1.0.0",
+  "description": "An Enact application demonstrating MUI and styled-components container queries.",
+  "author": "",
+  "main": "src/index.js",
+  "scripts": {
+    "serve": "enact serve",
+    "pack": "enact pack",
+    "pack-p": "enact pack -p",
+    "watch": "enact pack --watch",
+    "clean": "enact clean",
+    "lint": "enact lint --strict .",
+    "license": "enact license",
+    "test": "enact test",
+    "test-watch": "enact test --watch"
+  },
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "https://github.com/enactjs/samples",
+  "enact": {
+    "title": "Container queries Pattern",
+    "isomorphic": true,
+    "ri": {
+      "baseSize": 48
+    }
+  },
+  "eslintConfig": {
+    "extends": "enact-proxy/strict"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@enact/core": "^4.9.0",
+    "@enact/i18n": "^4.9.0",
+    "@enact/sandstone": "^2.9.0",
+    "@enact/spotlight": "^4.9.0",
+    "@enact/ui": "^4.9.0",
+    "@mui/system": "^6.1.6",
+    "ilib": "^14.20.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "eslint-config-enact-proxy": "^1.0.8"
+  }
+}
