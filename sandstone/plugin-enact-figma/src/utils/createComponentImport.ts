@@ -11,6 +11,11 @@ const createComponentImport = (components: { componentName: string }[]) => {
 				return `import { ${name} } from '@enact/sandstone/Panels';\n`;
 			case 'InputField':
 				return `import { ${name} } from '@enact/sandstone/Input';\n`;
+			case 'Layout':
+			case 'Row':
+			case 'Column':
+			case 'Cell':
+				return `import { ${name} } from '@enact/ui/Layout';\n`;
 			default:
 				return `import { ${name} } from '@enact/sandstone/${name}';\n`;
 		}

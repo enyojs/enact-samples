@@ -8,9 +8,9 @@ figma.ui.onmessage = (msg) => {
 	if (msg.type === 'create') {
 		const components = (figma.currentPage.children[0] as FrameNode).children.map(component => {
 			const componentProps = extractComponentProps(component, component.name);
-			const children = componentProps.children;
+			const childrenProps = componentProps.children;
 			const componentName = component.name;
-			return {componentName, componentProps, children, x: component.x, y: component.y};
+			return {componentName, componentProps, childrenProps, x: component.x, y: component.y};
 		});
 
 		generateCode(generateEnactCode(components));

@@ -13,23 +13,23 @@ const convertToRGB = (color: { r: number, g: number, b: number }) => {
 
 // Extract component props from Figma design
 const extractChildComponents = (component: CustomComponent) => {
-	return component.children.map((children, index: number) => {
+	return component.childrenProps.map((childrenProps, index: number) => {
 		if (componentsNames.includes(component.componentName) && index === 1) {
-			return children.children[0].children[0].characters ?? children;
+			return childrenProps.children[0].children[0].characters ?? childrenProps;
 		}
 
-		return children.characters ?? children;
+		return childrenProps.characters ?? childrenProps;
 	});
 };
 
 const getComponentColor = (component: CustomComponent): string => {
-	return component.children.map((children) => {
-		if (componentsNames.includes(component.componentName) && !!children.children[0].children) {
-			return convertToRGB(children.children[0].children[0].fills[0].color);
+	return component.childrenProps.map((childrenProps) => {
+		if (componentsNames.includes(component.componentName) && !!childrenProps.children[0].children) {
+			return convertToRGB(childrenProps.children[0].children[0].fills[0].color);
 		}
 
-		if (children.fills.length > 0) {
-			return convertToRGB(children.fills[0].color);
+		if (childrenProps.fills.length > 0) {
+			return convertToRGB(childrenProps.fills[0].color);
 		}
 
 		return '';
@@ -46,7 +46,7 @@ const getComponentPadding = (componentProps: InstanceNode): string => {
 };
 
 const extractComponentStyles = (component: CustomComponent): CustomComponentStyles => {
-	const componentFontSize = (component.componentProps.children.find(value => (value as TextNode).fontSize) as TextNode).fontSize;
+	const componentFontSize = (component.componentProps.children?.find(value => (value as TextNode).fontSize) as TextNode)?.fontSize;
 
 	const backgroundColor = component.componentProps.fills[0] && convertToRGB(component.componentProps.fills[0].color);
 	const borderRadius = String(component.componentProps.cornerRadius);
@@ -63,14 +63,16 @@ const extractComponentStyles = (component: CustomComponent): CustomComponentStyl
 };
 
 const extractComponentProps = (component: CustomComponent, childrenComponents): CustomComponentProperties => {
-	const disabled = component.componentProps.componentProperties.State.value === 'deactivated';
+	const align = component.componentProps.componentProperties.align?.value.toString();
+	const disabled = component.componentProps.componentProperties.State?.value === 'deactivated';
 	const placeholder = childrenComponents[0] ?? '';
 	const selected = component.componentProps.componentProperties.Type?.value === 'selected';
+	const shrink = component.componentProps.componentProperties['shrink#57:0']?.value === true;
 	const size = component.componentProps.componentProperties.Size?.value;
 	const subtitle = childrenComponents[1] ?? '';
 	const title = childrenComponents[0] ?? '';
 
-	return {disabled, placeholder, selected, size, subtitle, title};
+	return {align, disabled, placeholder, selected, shrink, size, subtitle, title};
 };
 
 // Create Enact component from Figma component
