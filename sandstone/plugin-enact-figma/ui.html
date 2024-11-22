@@ -266,8 +266,17 @@
 		const msg = event.data.pluginMessage;
 
 		if (msg.type === 'show-code') {
+			const formatted = prettier.format(msg.data, {
+				bracketSpacing: false,
+				parser: 'babel',
+				plugins: prettierPlugins,
+				singleQuote: true,
+				trailingComma: 'none',
+				useTabs: true
+			});
+
 			code.classList.add('hljs');
-			code.innerHTML = hljs.highlightAuto(msg.data).value;
+			code.innerHTML = hljs.highlightAuto(formatted).value;
 
 			const generateButton = document.getElementById('generate-code-button');
 			const generateIcon = document.getElementById('generate-icon');
@@ -283,6 +292,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <!-- and it's easy to individually load additional languages -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script src="https://unpkg.com/prettier@2.8.8/standalone.js"></script>
+<script src="https://unpkg.com/prettier@2.8.8/parser-babel.js"></script>
 </body>
 
 </html>

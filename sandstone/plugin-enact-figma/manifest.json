@@ -12,7 +12,8 @@
   "ui": "ui.html",
   "networkAccess": {
     "allowedDomains": [
-      "https://cdnjs.cloudflare.com"
+      "https://cdnjs.cloudflare.com",
+      "https://unpkg.com"
     ],
     "devAllowedDomains": [
       "http://localhost:8080"

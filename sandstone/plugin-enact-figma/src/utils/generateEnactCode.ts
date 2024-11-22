@@ -7,7 +7,7 @@ const createComponents = (components: CustomComponent[]) => {
 		if (component.componentName === 'Cell' || component.componentName === 'Column' || component.componentName === 'Row') {
 			if (component.children && component.children.length > 0) {
 				const childrenArray = component.children.map((child) => {
-					return createComponentNode(child);
+					return createComponentNode(child, component.componentName);
 				});
 
 				const parentsArray = createComponentNode(component);
@@ -24,16 +24,9 @@ const createComponents = (components: CustomComponent[]) => {
 		}
 
 		return createComponentNode(component);
-	}).filter(componentNode => componentNode !== '')
-		.map((componentNode, index, array) => {
-			if (array.length === 1) return '\t' + componentNode;
-			if (index === 0) return '\t' + componentNode + '\n';
-			if (index < array.length - 1) return componentNode + '\n';
+	}).filter(componentNode => componentNode !== '');
 
-			return componentNode;
-		});
-
-	return allComponents.toString().replace(/,</g, '\t\t\t<');
+	return allComponents.toString().replace(/,</g, '<');
 };
 
 const addAdditionalContentForContextualDecorator = (menuDecorator: boolean, popupDecorator: boolean) => {
@@ -93,24 +86,24 @@ const generateEnactCode = (components: CustomComponent[]) => {
 	const nestedComponents = nestComponents(components);
 
 	return `${createComponentImport(components)}
-import kind from '@enact/core/kind';
-import {Scroller} from '@enact/sandstone/Scroller';
-import {Layout} from '@enact/ui/Layout';
-import ri from '@enact/ui/resolution';
-${addAdditionalContentForContextualDecorator(isContextualMenuDecorator, isContextualPopupDecorator)}
-const MainPanel = kind({
-    name: 'MainPanel',
-
-    render: () => (
-        <Scroller focusableScrollbar>
-		<Layout>
-		${createComponents(nestedComponents)}
-		</Layout>
-		</Scroller>
-    )
-});
-
-export default MainPanel;`;
+		import kind from '@enact/core/kind';
+		import {Scroller} from '@enact/sandstone/Scroller';
+		import {Layout} from '@enact/ui/Layout';
+		import ri from '@enact/ui/resolution';
+		${addAdditionalContentForContextualDecorator(isContextualMenuDecorator, isContextualPopupDecorator)}
+			const MainPanel = kind({
+				name: 'MainPanel',
+			
+				render: () => (
+					<Scroller focusableScrollbar>
+						<Layout>
+							${createComponents(nestedComponents)}
+						</Layout>
+					</Scroller>
+				)
+			});
+			
+		export default MainPanel;`;
 };
 
 export default generateEnactCode;

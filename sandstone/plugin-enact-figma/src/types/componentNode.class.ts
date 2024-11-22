@@ -3,9 +3,11 @@ import CustomComponentProperties from "./componentProperties.class";
 
 class EnactComponentNode {
 	private readonly componentName: string;
+	private readonly hasComponentLayoutParent: boolean;
 	private componentNode: string;
 
-	constructor (componentName: string) {
+	constructor (componentName: string, componentLayoutParent: boolean) {
+		this.hasComponentLayoutParent = componentLayoutParent;
 		this.componentName = componentName;
 	}
 
@@ -20,11 +22,14 @@ class EnactComponentNode {
 				// Exclude 'top' and 'left' if the component is a Button
 				// in the demo we have Buttons inside Layout components, and they need to be aligned automatically, not forced with 'top' and 'left'
 				// also excluded 'color' for now, so that Spotlight works and color is not enforced
-				if (this.componentName === 'Button' && (key === 'top' || key === 'left' || key === 'color')) {
+				if (this.componentName === 'Button' && (key === 'top' || key === 'left' || key === 'color') && this.hasComponentLayoutParent) {
 					return null;
 				}
 				if (this.componentName === 'Button' && key === 'backgroundColor') {
 					return `'--sand-component-bg-color': '${value}'`;
+				} else if (this.componentName === 'Button' && key === 'color') {
+					const rgbValue = value.split('rgb(')[1].split(')')[0].split(', ');
+					return `'--sand-component-text-color-rgb': '${rgbValue[0]}, ${rgbValue[1]}, ${rgbValue[2]}'`;
 				} else if (value.includes('rgb')) {
 					return `${key}: '${value}'`;
 				} else if (key.includes('padding')) {
@@ -35,6 +40,29 @@ class EnactComponentNode {
 			})
 			.filter(Boolean) // Remove any nulls from the map
 			.join(', ');
+	}
+
+	private convertPropertiesToString (props: CustomComponentProperties) {
+		return Object.entries(props)
+			.filter(([key, value]) => {
+				const formattedKey = key.split('#')[0];
+
+				return formattedKey !== 'children' &&
+					formattedKey !== 'showColor' &&
+					formattedKey !== 'showIcon' &&
+					formattedKey !== 'showTooltip' &&
+					value;
+			})
+			.map(([key, value]) => {
+				const formattedKey = key.split('#')[0];
+
+				if (value === 'true' || value === true || value === 'false' || value === false) {
+					return `${formattedKey}={${value}}`;
+				}
+
+				return `${formattedKey}={'${value}'}`;
+			})
+			.join(' ');
 	}
 
 	private extractIconName (componentProperties): string {
@@ -62,7 +90,7 @@ class EnactComponentNode {
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Button':
-				tagWithProps = `<${this.componentName} disabled={${props.disabled}} size={'${props.size}'}`;
+				tagWithProps = `<${this.componentName} ${this.convertPropertiesToString(props)}`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
 			case 'Cell':
@@ -126,6 +154,11 @@ class EnactComponentNode {
 				tagWithProps = `<${this.componentName}"`;
 				this.componentNode = this.componentNode.replace(tag, tagWithProps);
 				return this;
+			case 'VirtualList':
+				const itemRenderer = `() => <${props.virtualListItem}>${props.virtualListItem}</${props.virtualListItem}>`;
+				tagWithProps = `<${this.componentName} dataSize={10} itemRenderer={${itemRenderer}} itemSize={60}`;
+				this.componentNode = this.componentNode.replace(tag, tagWithProps);
+				return this;
 			default:
 				return this;
 		}
@@ -134,54 +167,56 @@ class EnactComponentNode {
 	// Add styling to the created component node
 	addComponentStyle (styles: CustomComponentStyles) {
 		const tag = `<${this.componentName}`;
-		const topLeftPosition = `position: "absolute"`;
+		const convertedStyles = this.convertStylesToString(styles);
+		const componentPosition = (convertedStyles.length > 0 ? ', ' : '').concat(`position: 'absolute'`);
+		const componentStyle = convertedStyles.concat(this.hasComponentLayoutParent ? '' : componentPosition);
 
 		switch (this.componentName) {
 			case 'ActionGuide':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'BodyText':
 			case 'Button':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Cell':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Checkbox':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'CheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'ContextualMenuDecorator':
-				this.componentNode = this.componentNode.replace('<ContextualMenuButton', `<ContextualMenuButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
+				this.componentNode = this.componentNode.replace('<ContextualMenuButton', `<ContextualMenuButton style={{${componentStyle}}}`);
 				return this;
 			case 'ContextualPopupDecorator':
-				this.componentNode = this.componentNode.replace('<ContextualPopupButton', `<ContextualPopupButton style={{${topLeftPosition}, width: ri.scaleToRem(1020)}}`);
+				this.componentNode = this.componentNode.replace('<ContextualPopupButton', `<ContextualPopupButton style={{${componentStyle}}}`);
 				return this;
 			case 'DatePicker':
 			case 'DayPicker':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)})}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Dropdown':
 			case 'FormCheckboxItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Icon':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'IconItem':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Header':
 			case 'Input':
 			case 'InputField':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			case 'Layout':
 			case 'Row':
 			case 'Column':
-				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${topLeftPosition}, ${this.convertStylesToString(styles)}}}`);
+				this.componentNode = this.componentNode.replace(tag, `<${this.componentName} style={{${componentStyle}}}`);
 				return this;
 			default:
 				return this;
@@ -241,6 +276,9 @@ class EnactComponentNode {
 			case 'Header':
 			case 'Input':
 			case 'InputField':
+				this.componentNode = `<${this.componentName} />`;
+				return this;
+			case 'VirtualList':
 				this.componentNode = `<${this.componentName} />`;
 				return this;
 			default:
