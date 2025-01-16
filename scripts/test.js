@@ -1,13 +1,16 @@
 /* eslint-disable no-console, no-shadow */
 const process = require('process'),
-	readdirp = require('readdirp'),
+	{readdirpPromise} = require('readdirp'),
 	shell = require('shelljs'),
 	path = require('path');
 
 let error = false;
 
-readdirp
-	.promise('.', {depth: 2, fileFilter: 'package.json', directoryFilter: ['!node_modules']})
+readdirpPromise('.', {
+	depth: 2,
+	directoryFilter: (di) => di.basename !== 'node_modules',
+	fileFilter: (fi) => fi.basename === 'package.json'
+})
 	.then(files => {
 		files.forEach(file => {
 			if (file.path === 'package.json') {

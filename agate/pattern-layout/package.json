@@ -27,19 +27,19 @@
     "extends": "enact-proxy/strict"
   },
   "dependencies": {
-    "@enact/agate": "^2.0.10",
-    "@enact/core": "^4.8.0",
-    "@enact/i18n": "^4.8.0",
-    "@enact/spotlight": "^4.8.0",
-    "@enact/ui": "^4.8.0",
-    "@enact/webos": "^4.8.0",
+    "@enact/agate": "^2.0.11",
+    "@enact/core": "^4.9.4",
+    "@enact/i18n": "^4.9.4",
+    "@enact/spotlight": "^4.9.4",
+    "@enact/ui": "^4.9.4",
+    "@enact/webos": "^4.9.4",
     "ilib": "^14.20.0",
     "prop-types": "^15.8.1",
-    "query-string": "^8.2.0",
-    "react": "^19.0.0-rc-38e3b23483-20240529",
-    "react-dom": "^19.0.0-rc-38e3b23483-20240529"
+    "query-string": "^9.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "eslint-config-enact-proxy": "^1.0.7"
+    "eslint-config-enact-proxy": "^1.0.8"
   }
 }
