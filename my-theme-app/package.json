@@ -33,11 +33,11 @@
     "dist/*"
   ],
   "dependencies": {
-    "@enact/core": "^4.9.4",
-    "@enact/i18n": "^4.9.4",
+    "@enact/core": "^5.0.0-alpha.4",
+    "@enact/i18n": "^5.0.0-alpha.4",
     "@enact/my-theme": "enactjs/my-theme#feature/react19",
-    "@enact/spotlight": "^4.9.4",
-    "@enact/ui": "^4.9.4",
+    "@enact/spotlight": "^5.0.0-alpha.4",
+    "@enact/ui": "^5.0.0-alpha.4",
     "ilib": "^14.20.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
