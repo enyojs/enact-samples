@@ -1,3 +1,5 @@
+/* eslint-disable enact/prop-types */
+
 import {adaptEvent, forward, handle} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Button from '@enact/sandstone/Button';

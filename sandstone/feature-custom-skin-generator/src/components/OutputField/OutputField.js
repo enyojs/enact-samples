@@ -168,7 +168,6 @@ const OutputField = kind({
 	render: ({fullCSS, generateFile, handleClose, handleFocus, handleFullCSS, handleOpen, onToggleOpen, popupOpen, setDefaultState, text}) => {
 		// Function that copies the content of the custom-skin css file into clipboard
 		function copyToClipboard () {
-			/* global navigator */
 			return navigator.clipboard?.writeText(text);
 		}
 
